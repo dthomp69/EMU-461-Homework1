@@ -16,6 +16,9 @@ public class UserInputs {
 	private int evaluationOption;
 	private int heuristicOption;
 
+	private char[][] initialBoardChar;
+	private char[][] goalBoardChar;
+
 	public UserInputs() {
 		this.scanner = new Scanner(System.in);
 	}
@@ -63,6 +66,9 @@ public class UserInputs {
 				this.initialBoard = new int[this.puzzleSize][this.puzzleSize];
 				this.goalBoard = new int[this.puzzleSize][this.puzzleSize];
 
+				this.initialBoardChar = new char[this.puzzleSize][this.puzzleSize];
+				this.goalBoardChar = new char[this.puzzleSize][this.puzzleSize];
+
 				// reads empty line
 				bufferedReader.readLine();
 
@@ -71,14 +77,24 @@ public class UserInputs {
 					String nextLine = bufferedReader.readLine();
 					String[] charArraySplit = nextLine.split(" ");
 					for (int j = 0; j < this.puzzleSize; j++) {
+						char[] charArray = charArraySplit[j].toCharArray();
+						this.initialBoardChar[i][j] = charArray[0];
 						this.initialBoard[i][j] = Integer.parseInt(charArraySplit[j]);
 					}
 				}
 
-				// Printed out the initial array for testing purposes.
+//				 Printed out the initial array for testing purposes.
 //				for(int i=0; i<this.puzzleSize; i++) {
 //					for(int j=0; j<this.puzzleSize; j++) {
 //						System.out.print(this.initialBoard[i][j]);
+//					}
+//					System.out.println();
+//				}
+
+				// Printed out the initial array for testing purposes, the char version
+//				for (int i = 0; i < this.puzzleSize; i++) {
+//					for (int j = 0; j < this.puzzleSize; j++) {
+//						System.out.print(this.initialBoardChar[i][j]);
 //					}
 //					System.out.println();
 //				}
@@ -91,6 +107,8 @@ public class UserInputs {
 					String nextLine = bufferedReader.readLine();
 					String[] charArraySplit = nextLine.split(" ");
 					for (int j = 0; j < this.puzzleSize; j++) {
+						char[] charArray = charArraySplit[j].toCharArray();
+						this.goalBoardChar[i][j] = charArray[0];
 						this.goalBoard[i][j] = Integer.parseInt(charArraySplit[j]);
 					}
 				}
@@ -102,6 +120,15 @@ public class UserInputs {
 //					}
 //					System.out.println();
 //				}
+				
+				// Printed out the goal array for testing purposes.
+//				for(int i=0; i<this.puzzleSize; i++) {
+//					for(int j=0; j<this.puzzleSize; j++) {
+//						System.out.print(this.goalBoardChar[i][j]);
+//					}
+//					System.out.println();
+//				}
+
 
 				// read again to clear the next empty line;
 				bufferedReader.readLine();
@@ -117,8 +144,7 @@ public class UserInputs {
 				String heuristicOption = bufferedReader.readLine();
 				this.heuristicOption = Integer.parseInt(heuristicOption);
 
-				
-				//Remember to close the fileReader.
+				// Remember to close the fileReader.
 				bufferedReader.close();
 
 			} catch (IOException e) {
@@ -167,5 +193,21 @@ public class UserInputs {
 
 	public void setHeuristicOption(int heuristicOption) {
 		this.heuristicOption = heuristicOption;
+	}
+
+	public char[][] getInitialBoardChar() {
+		return initialBoardChar;
+	}
+
+	public void setInitialBoardChar(char[][] initialBoardChar) {
+		this.initialBoardChar = initialBoardChar;
+	}
+
+	public char[][] getGoalBoardChar() {
+		return goalBoardChar;
+	}
+
+	public void setGoalBoardChar(char[][] goalBoardChar) {
+		this.goalBoardChar = goalBoardChar;
 	}
 }
