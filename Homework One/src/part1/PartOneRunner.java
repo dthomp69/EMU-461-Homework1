@@ -37,6 +37,10 @@ public class PartOneRunner {
 
 		AStarSliding algorithm = new AStarSliding(initialChar, goalChar, puzzleSize);
 		algorithm.solve();
+		
+		//Write to output file
+		ProgramOutputs outputs = new ProgramOutputs();
+		outputs.writeOutputs(algorithm.getOutputs());
 	}
 
 }

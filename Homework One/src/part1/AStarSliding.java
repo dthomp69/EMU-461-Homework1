@@ -31,13 +31,21 @@ public class AStarSliding {
 	private Board goal; // goal board
 	private int size; // board size
 
+	// Outputs
+	private int swaps;
+	private int boardsSearched;
+	private int runTime;
+
 	// Constructor of SlidingAstar class
-	public AStarSliding(char[][] initial, char[][] goal, int size)
-    {
-        this.size = size;                          //set size of board
-        this.initial = new Board(initial, size);   //create initial board
-        this.goal = new Board(goal, size);         //create goal board
-    }
+	public AStarSliding(char[][] initial, char[][] goal, int size) {
+		this.size = size; // set size of board
+		this.initial = new Board(initial, size); // create initial board
+		this.goal = new Board(goal, size); // create goal board
+
+		this.runTime = 0;
+		this.boardsSearched = 0;
+		this.swaps = -1; //Starts at -1, to avoid counting the initial board
+	}
 
 	// Method solves sliding puzzle
 	public void solve() {
@@ -92,7 +100,7 @@ public class AStarSliding {
 		for (i = 0; i < size; i++) // find location of empty slot
 		{ // of board
 			for (j = 0; j < size; j++)
-				//Need to be 0 or '0'?
+				// Need to be 0 or '0'?
 				if (board.array[i][j] == '0') {
 					found = true;
 					break;
@@ -260,6 +268,7 @@ public class AStarSliding {
 
 	// Method displays board
 	private void displayBoard(Board board) {
+		this.swaps++;
 		for (int i = 0; i < size; i++) // print each element of board
 		{
 			for (int j = 0; j < size; j++)
@@ -267,5 +276,10 @@ public class AStarSliding {
 			System.out.println();
 		}
 		System.out.println();
+	}
+
+	public InfoPasser getOutputs() {
+		InfoPasser passer = new InfoPasser(this.runTime, this.swaps, this.boardsSearched);
+		return passer;
 	}
 }
