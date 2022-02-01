@@ -1,4 +1,4 @@
-package part1;
+package q1.program;
 
 public class InfoPasser {
 	private int runTime;

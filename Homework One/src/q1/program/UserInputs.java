@@ -1,4 +1,4 @@
-package part1;
+package q1.program;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -18,9 +18,12 @@ public class UserInputs {
 
 	private char[][] initialBoardChar;
 	private char[][] goalBoardChar;
+	
+	private boolean readFile;
 
 	public UserInputs() {
 		this.scanner = new Scanner(System.in);
+		this.setReadFile(false);
 	}
 
 	public void askForInputs() {
@@ -43,11 +46,13 @@ public class UserInputs {
 //		System.out.println(System.getProperty("user.dir"));
 //		System.out.println(System.getProperty("user.dir") + "\\src\\part1\\" + fileName);
 		try {
-			FileReader fileReader = new FileReader(System.getProperty("user.dir") + "\\src\\part1\\" + fileName);
+			FileReader fileReader = new FileReader(System.getProperty("user.dir") + "\\src\\q1\\program\\" + fileName);
 		} catch (FileNotFoundException e) {
 			return false;
 		}
 
+		this.setReadFile(true);
+		
 		return true;
 	}
 
@@ -56,7 +61,7 @@ public class UserInputs {
 
 		try {
 			BufferedReader bufferedReader = new BufferedReader(
-					new FileReader(System.getProperty("user.dir") + "\\src\\part1\\" + fileName));
+					new FileReader(System.getProperty("user.dir") + "\\src\\q1\\program\\" + fileName));
 			try {
 				String puzzleSize = bufferedReader.readLine();
 				this.puzzleSize = Integer.parseInt(puzzleSize);
@@ -209,5 +214,13 @@ public class UserInputs {
 
 	public void setGoalBoardChar(char[][] goalBoardChar) {
 		this.goalBoardChar = goalBoardChar;
+	}
+
+	public boolean getReadFile() {
+		return readFile;
+	}
+
+	public void setReadFile(boolean readFile) {
+		this.readFile = readFile;
 	}
 }

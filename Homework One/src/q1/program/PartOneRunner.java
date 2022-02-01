@@ -1,4 +1,4 @@
-package part1;
+package q1.program;
 
 public class PartOneRunner {
 
@@ -8,7 +8,7 @@ public class PartOneRunner {
 		inputs.askForInputs();
 
 		int puzzleSize = inputs.getPuzzleSize();
-		
+
 		int[][] initial = inputs.getInitialBoard();
 		int[][] goal = inputs.getGoalBoard();
 
@@ -37,10 +37,13 @@ public class PartOneRunner {
 
 		AStarSliding algorithm = new AStarSliding(initialChar, goalChar, puzzleSize);
 		algorithm.solve();
-		
-		//Write to output file
-		ProgramOutputs outputs = new ProgramOutputs();
-		outputs.writeOutputs(algorithm.getOutputs());
+
+		// Write to output file
+		// only write outputs to file if you found and read a file
+		if (inputs.getReadFile()) {
+			ProgramOutputs outputs = new ProgramOutputs();
+			outputs.writeOutputs(algorithm.getOutputs());
+		}
 	}
 
 }
