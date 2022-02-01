@@ -18,7 +18,7 @@ public class UserInputs {
 
 	private char[][] initialBoardChar;
 	private char[][] goalBoardChar;
-	
+
 	private boolean readFile;
 
 	public UserInputs() {
@@ -27,18 +27,23 @@ public class UserInputs {
 	}
 
 	public void askForInputs() {
-		String userInput = "";
-		System.out.println("Please input the name of the file you'd like to read from:");
-		userInput = this.scanner.nextLine();
-		System.out.println("You said: " + userInput);
+		boolean verifyingInput = true;
 
-		boolean validated = validateFileName(userInput);
+		while (verifyingInput) {
+			String userInput = "";
+			System.out.println("Please input the name of the file you'd like to read from:");
+			userInput = this.scanner.nextLine();
+			System.out.println("You said: " + userInput);
 
-		if (validated == false) {
-			System.out.println("Invalid file name.");
-		} else {
-			System.out.println("Valid file name.");
-			getFileInputs(userInput);
+			boolean validated = validateFileName(userInput);
+
+			if (validated == false) {
+				System.out.println("Invalid file name.");
+			} else {
+				System.out.println("Valid file name.");
+				verifyingInput = false;
+				getFileInputs(userInput);
+			}
 		}
 	}
 
@@ -52,7 +57,7 @@ public class UserInputs {
 		}
 
 		this.setReadFile(true);
-		
+
 		return true;
 	}
 
@@ -125,7 +130,7 @@ public class UserInputs {
 //					}
 //					System.out.println();
 //				}
-				
+
 				// Printed out the goal array for testing purposes.
 //				for(int i=0; i<this.puzzleSize; i++) {
 //					for(int j=0; j<this.puzzleSize; j++) {
@@ -133,7 +138,6 @@ public class UserInputs {
 //					}
 //					System.out.println();
 //				}
-
 
 				// read again to clear the next empty line;
 				bufferedReader.readLine();
