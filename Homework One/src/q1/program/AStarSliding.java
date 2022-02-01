@@ -46,6 +46,9 @@ public class AStarSliding {
 	private int evaluationOption;
 	private int heuristicOption;
 
+	// Class made to handle output writing
+	public ProgramOutputs OutputWriter;
+
 	// Constructor of SlidingAstar class
 	public AStarSliding(char[][] initial, char[][] goal, int size, int evaluationOption, int heuristicOption) {
 		this.size = size; // set size of board
@@ -58,6 +61,9 @@ public class AStarSliding {
 
 		this.evaluationOption = evaluationOption;
 		this.heuristicOption = heuristicOption;
+
+		this.OutputWriter = new ProgramOutputs();
+		this.OutputWriter.determineOutputFile();
 
 	}
 
@@ -347,6 +353,8 @@ public class AStarSliding {
 			System.out.println();
 		}
 		System.out.println();
+
+		this.OutputWriter.writeBoard(board.array, this.size);
 	}
 
 	public InfoPasser getOutputs() {

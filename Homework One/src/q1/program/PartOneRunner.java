@@ -34,7 +34,7 @@ public class PartOneRunner {
 //		System.out.println(inputs.getGoalBoard());
 //		System.out.println(inputs.getEvaluationOption());
 //		System.out.println(inputs.getHeuristicOption());
-		
+
 		int evaluationOption = inputs.getEvaluationOption();
 		int heuristicOption = inputs.getHeuristicOption();
 
@@ -44,8 +44,9 @@ public class PartOneRunner {
 		// Write to output file
 		// only write outputs to file if you found and read a file
 		if (inputs.getReadFile()) {
-			ProgramOutputs outputs = new ProgramOutputs();
-			outputs.writeOutputs(algorithm.getOutputs());
+//			ProgramOutputs outputs = new ProgramOutputs();
+//			outputs.writeOutputs(algorithm.getOutputs());
+			algorithm.OutputWriter.writeOutputs(algorithm.getOutputs());
 		}
 	}
 
