@@ -34,21 +34,37 @@ public class AStarSliding {
 	// Outputs
 	private int swaps;
 	private int boardsSearched;
-	private int runTime;
+	// private int runTime;
+
+	// Time counting functions
+	private long runTime;
+	// Tracking a cumulative gapTime, the amount of time needed to subtract from the
+	// final runtime, to get the runtime of only the algorithm itself
+	private long gapTime;
+
+	// User options
+	private int evaluationOption;
+	private int heuristicOption;
 
 	// Constructor of SlidingAstar class
-	public AStarSliding(char[][] initial, char[][] goal, int size) {
+	public AStarSliding(char[][] initial, char[][] goal, int size, int evaluationOption, int heuristicOption) {
 		this.size = size; // set size of board
 		this.initial = new Board(initial, size); // create initial board
 		this.goal = new Board(goal, size); // create goal board
-
 		this.runTime = 0;
+		this.gapTime = 0;
 		this.boardsSearched = 0;
-		this.swaps = -1; //Starts at -1, to avoid counting the initial board
+		this.swaps = -1; // Starts at -1, to avoid counting the initial board
+
+		this.evaluationOption = evaluationOption;
+		this.heuristicOption = heuristicOption;
+
 	}
 
 	// Method solves sliding puzzle
 	public void solve() {
+		long startTime = System.nanoTime();
+
 		LinkedList<Board> openList = new LinkedList<Board>(); // open list
 		LinkedList<Board> closedList = new LinkedList<Board>();// closed list
 
@@ -62,12 +78,25 @@ public class AStarSliding {
 
 			closedList.addLast(board); // add board to closed list
 
+			// After adding a board to move to closed list would be when you realize that
+			// you searched a board yeah?
+			this.boardsSearched++;
+
 			if (goal(board)) // if board is goal
 			{
+				// calculate runtime
+				long endTime = System.nanoTime();
+				this.runTime = endTime - startTime;
+
 				displayPath(board); // display path to goal
+
 				return; // stop search
 			} else // if board is not goal
 			{
+				// I was planning on counting gaptime, but generation of children is included in
+				// the runtime of the serach algorithm, correct?
+				// At first I was thinking it wouldn't be, but it calculates the heuristic here,
+				// which is an important part of the algorithm working.
 				LinkedList<Board> children = generate(board);// create children
 
 				for (int i = 0; i < children.size(); i++) { // for each child
@@ -90,6 +119,9 @@ public class AStarSliding {
 		}
 
 		System.out.println("no solution"); // no solution if there are
+
+		long endTime = System.nanoTime();
+		this.runTime = endTime - startTime;
 	} // no boards in open list
 
 	// Method creates children of a board
@@ -155,7 +187,11 @@ public class AStarSliding {
 
 		child.gvalue = board.gvalue + 1; // parent path cost plus one
 
-		child.hvalue = heuristic(child); // heuristic value of child
+		if (this.heuristicOption == 1) {
+			child.hvalue = mismatchHeuristic(child); // heuristic value of child
+		} else if (this.heuristicOption == 2) {
+			child.hvalue = cityDistanceHeuristic(child);
+		}
 
 		child.fvalue = child.gvalue + child.hvalue; // gvalue plus hvalue
 
@@ -165,7 +201,7 @@ public class AStarSliding {
 	}
 
 	// Method computes heuristic value of board based on misplaced values
-	private int heuristic(Board board) {
+	private int mismatchHeuristic(Board board) {
 		int value = 0; // initial heuristic value
 
 		for (int i = 0; i < size; i++) // go thru board and
@@ -193,6 +229,35 @@ public class AStarSliding {
 	 * 
 	 * //return heuristic value return value; }
 	 */
+
+	private int cityDistanceHeuristic(Board board) {
+		// initial heuristic value
+		int value = 0;
+
+		// go thru board
+		for (int i = 0; i < size; i++)
+			for (int j = 0; j < size; j++)
+				// if value mismatches in goal board
+				if (board.array[i][j] != goal.array[i][j]) { // locate value in goal board
+					int x = 0, y = 0;
+					boolean found = false;
+					for (x = 0; x < size; x++) {
+						for (y = 0; y < size; y++)
+							if (goal.array[x][y] == board.array[i][j]) {
+								found = true;
+								break;
+							}
+						if (found)
+							break;
+					}
+
+					// find city distance between two locations
+					value += (int) Math.abs(x - i) + (int) Math.abs(y - j);
+				}
+
+		// return heuristic value
+		return value;
+	}
 
 	// Method locates the board with minimum fvalue in a list of boards
 	private int selectBest(LinkedList<Board> list) {

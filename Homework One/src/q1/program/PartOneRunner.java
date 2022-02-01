@@ -34,8 +34,11 @@ public class PartOneRunner {
 //		System.out.println(inputs.getGoalBoard());
 //		System.out.println(inputs.getEvaluationOption());
 //		System.out.println(inputs.getHeuristicOption());
+		
+		int evaluationOption = inputs.getEvaluationOption();
+		int heuristicOption = inputs.getHeuristicOption();
 
-		AStarSliding algorithm = new AStarSliding(initialChar, goalChar, puzzleSize);
+		AStarSliding algorithm = new AStarSliding(initialChar, goalChar, puzzleSize, evaluationOption, heuristicOption);
 		algorithm.solve();
 
 		// Write to output file
