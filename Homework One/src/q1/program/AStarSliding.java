@@ -193,7 +193,13 @@ public class AStarSliding {
 			child.hvalue = cityDistanceHeuristic(child);
 		}
 
-		child.fvalue = child.gvalue + child.hvalue; // gvalue plus hvalue
+		if (this.evaluationOption == 1) {
+			child.fvalue = child.hvalue;
+		} else if (this.evaluationOption == 2) {
+			child.fvalue = child.gvalue;
+		} else if (this.evaluationOption == 3) {
+			child.fvalue = child.gvalue + child.hvalue; // gvalue plus hvalue
+		}
 
 		child.parent = board; // assign parent to child
 
