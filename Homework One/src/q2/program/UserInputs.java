@@ -1,4 +1,4 @@
-package q1.program;
+package q2.program;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -12,9 +12,9 @@ public class UserInputs {
 
 	private int puzzleSize;
 	private int[][] initialBoard;
-	private int[][] goalBoard;
-	private int evaluationOption;
-	private int heuristicOption;
+//	private int[][] goalBoard;
+//	private int evaluationOption;
+//	private int heuristicOption;
 
 	private char[][] initialBoardChar;
 	private char[][] goalBoardChar;
@@ -51,7 +51,7 @@ public class UserInputs {
 //		System.out.println(System.getProperty("user.dir"));
 //		System.out.println(System.getProperty("user.dir") + "\\src\\part1\\" + fileName);
 		try {
-			FileReader fileReader = new FileReader(System.getProperty("user.dir") + "\\src\\q1\\program\\" + fileName);
+			FileReader fileReader = new FileReader(System.getProperty("user.dir") + "\\src\\q2\\program\\" + fileName);
 		} catch (FileNotFoundException e) {
 			return false;
 		}
@@ -66,7 +66,7 @@ public class UserInputs {
 
 		try {
 			BufferedReader bufferedReader = new BufferedReader(
-					new FileReader(System.getProperty("user.dir") + "\\src\\q1\\program\\" + fileName));
+					new FileReader(System.getProperty("user.dir") + "\\src\\q2\\program\\" + fileName));
 			try {
 				// Get the puzzle size
 				String puzzleSize = bufferedReader.readLine();
@@ -75,7 +75,7 @@ public class UserInputs {
 				// remember to construct the int[][]s
 
 				this.initialBoard = new int[this.puzzleSize][this.puzzleSize];
-				this.goalBoard = new int[this.puzzleSize][this.puzzleSize];
+//				this.goalBoard = new int[this.puzzleSize][this.puzzleSize];
 
 				this.initialBoardChar = new char[this.puzzleSize][this.puzzleSize];
 				this.goalBoardChar = new char[this.puzzleSize][this.puzzleSize];
@@ -90,7 +90,8 @@ public class UserInputs {
 					for (int j = 0; j < this.puzzleSize; j++) {
 						char[] charArray = charArraySplit[j].toCharArray();
 						this.initialBoardChar[i][j] = charArray[0];
-						this.initialBoard[i][j] = Integer.parseInt(charArraySplit[j]);
+						// TODO: make sure this is the right way to do this
+//						this.initialBoard[i][j] = Integer.parseInt(charArraySplit[j]);
 					}
 				}
 
@@ -111,18 +112,18 @@ public class UserInputs {
 //				}
 
 				// read again to clear the next empty line;
-				bufferedReader.readLine();
+//				bufferedReader.readLine();
 
 				// Now read in the goal board
-				for (int i = 0; i < this.puzzleSize; i++) {
-					String nextLine = bufferedReader.readLine();
-					String[] charArraySplit = nextLine.split(" ");
-					for (int j = 0; j < this.puzzleSize; j++) {
-						char[] charArray = charArraySplit[j].toCharArray();
-						this.goalBoardChar[i][j] = charArray[0];
-						this.goalBoard[i][j] = Integer.parseInt(charArraySplit[j]);
-					}
-				}
+//				for (int i = 0; i < this.puzzleSize; i++) {
+//					String nextLine = bufferedReader.readLine();
+//					String[] charArraySplit = nextLine.split(" ");
+//					for (int j = 0; j < this.puzzleSize; j++) {
+//						char[] charArray = charArraySplit[j].toCharArray();
+//						this.goalBoardChar[i][j] = charArray[0];
+//						this.goalBoard[i][j] = Integer.parseInt(charArraySplit[j]);
+//					}
+//				}
 
 				// Printed out the goal array for testing purposes.
 //				for(int i=0; i<this.puzzleSize; i++) {
@@ -141,21 +142,21 @@ public class UserInputs {
 //				}
 
 				// read again to clear the next empty line;
-				bufferedReader.readLine();
+//				bufferedReader.readLine();
 
 				// Get evaluation option
-				String evaluationOption = bufferedReader.readLine();
-				this.evaluationOption = Integer.parseInt(evaluationOption);
+//				String evaluationOption = bufferedReader.readLine();
+//				this.evaluationOption = Integer.parseInt(evaluationOption);
 
 				// read again to clear the next empty line;
-				bufferedReader.readLine();
+//				bufferedReader.readLine();
 
 				// Get heuristic option
-				String heuristicOption = bufferedReader.readLine();
-				this.heuristicOption = Integer.parseInt(heuristicOption);
+//				String heuristicOption = bufferedReader.readLine();
+//				this.heuristicOption = Integer.parseInt(heuristicOption);
 
 				// Remember to close the fileReader.
-				bufferedReader.close();
+//				bufferedReader.close();
 
 			} catch (IOException e) {
 				System.out.println("Error grabbing puzzleSize");
@@ -181,29 +182,29 @@ public class UserInputs {
 		this.initialBoard = initialBoard;
 	}
 
-	public int[][] getGoalBoard() {
-		return goalBoard;
-	}
-
-	public void setGoalBoard(int[][] goalBoard) {
-		this.goalBoard = goalBoard;
-	}
-
-	public int getEvaluationOption() {
-		return evaluationOption;
-	}
-
-	public void setEvaluationOption(int evaluationOption) {
-		this.evaluationOption = evaluationOption;
-	}
-
-	public int getHeuristicOption() {
-		return heuristicOption;
-	}
-
-	public void setHeuristicOption(int heuristicOption) {
-		this.heuristicOption = heuristicOption;
-	}
+//	public int[][] getGoalBoard() {
+//		return goalBoard;
+//	}
+//
+//	public void setGoalBoard(int[][] goalBoard) {
+//		this.goalBoard = goalBoard;
+//	}
+//
+//	public int getEvaluationOption() {
+//		return evaluationOption;
+//	}
+//
+//	public void setEvaluationOption(int evaluationOption) {
+//		this.evaluationOption = evaluationOption;
+//	}
+//
+//	public int getHeuristicOption() {
+//		return heuristicOption;
+//	}
+//
+//	public void setHeuristicOption(int heuristicOption) {
+//		this.heuristicOption = heuristicOption;
+//	}
 
 	public char[][] getInitialBoardChar() {
 		return initialBoardChar;
