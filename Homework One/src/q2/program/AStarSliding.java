@@ -421,8 +421,8 @@ public class AStarSliding {
 			}
 		}
 
-		int startOfNumbersIndexI = this.size;
-		int startOfNumbersIndexJ = this.size;
+		int startOfNumbersIndexI = this.size - 1;
+		int startOfNumbersIndexJ = this.size - 1;
 
 		boolean startedAtJ = false;
 		// Put R's in
@@ -460,7 +460,79 @@ public class AStarSliding {
 			}
 		}
 
-		// Pull out numbers, sorted
+		// Pull out numbers, sorted.
+		// At this point, you can assume everything left in the array is a number.
+		// Value for ;, the first item after numbers
+		int lowest = 58;
+		Character lowestChar = ';';
+		int lowestIndex = -1;
+		ArrayList<Character> sortedNumbers = new ArrayList<Character>();
+
+		System.out.println("Printing out elements going into number sorting: ");
+		for (int i = 0; i < elements.size(); i++) {
+			System.out.println(elements.get(i));
+		}
+		while (!elements.isEmpty()) {
+//			for (Character item : elements) {
+//				if (item.charValue() < lowest) {
+//					lowest = item.charValue();
+//					lowestChar = item;
+//				}
+//			}
+//			elements.remove(lowestChar);
+//			sortedNumbers.add(lowestChar);
+//			lowest = 58;
+			for (int i = 0; i < elements.size(); i++) {
+				int comparisonValue = Character.valueOf(elements.get(i)).compareTo(lowestChar);
+				System.out.println(comparisonValue);
+				if (comparisonValue < 0) {
+					lowestChar = elements.get(i);
+					lowestIndex = i;
+				}
+			}
+			sortedNumbers.add(lowestChar);
+			elements.remove(lowestIndex);
+			lowestIndex = -1;
+			lowestChar = ';';
+		}
+
+		System.out.println("Printing out the sorted numbers array: ");
+		for (int i = 0; i < sortedNumbers.size(); i++) {
+			System.out.println(sortedNumbers.get(i));
+		}
+
+		// Have to track this separately, since it's not iterating in the same way as
+		// the array iterations
+//		int placementIndex = 0;
+//		for (int i = 0; i < this.size; i++) {
+//			if (placementIndex == sortedNumbers.size()) {
+//				break;
+//			}
+//			for (int j = 0; i < this.size; j++) {
+//				if (placementIndex + 1 == sortedNumbers.size()) {
+//					goalBoard[i][j] = sortedNumbers.get(placementIndex);
+//					placementIndex++;
+//					break;
+//				} else {
+//					goalBoard[i][j] = sortedNumbers.get(placementIndex);
+//					placementIndex++;
+//
+//				}
+//			}
+//		}
+		for (int i = 0; i < this.size; i++) {
+			if (sortedNumbers.isEmpty()) {
+				break;
+			}
+			for (int j = 0; j < this.size; j++) {
+				if (sortedNumbers.isEmpty()) {
+					break;
+				} else {
+					goalBoard[i][j] = sortedNumbers.get(0);
+					sortedNumbers.remove(0);
+				}
+			}
+		}
 
 		// Print goalBoard for testing purposes
 		for (int i = 0; i < this.size; i++) {
