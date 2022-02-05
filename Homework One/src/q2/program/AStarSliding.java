@@ -103,6 +103,7 @@ public class AStarSliding {
 		System.out.println("Run generate children on start:");
 		this.generate(this.initial);
 		System.out.println("Finished generating start children");
+		System.exit(0);
 	}
 
 	// Method solves sliding puzzle
@@ -222,13 +223,14 @@ public class AStarSliding {
 		// The children to return
 		LinkedList<Board> children = new LinkedList<Board>();// list of children
 
-		for (int i = 0; i < this.size - 1; i++) {
-			for (int j = 0; j < this.size - 1; j++) {
+		for (int i = 0; i < this.size; i++) {
+			for (int j = 0; j < this.size; j++) {
 				if (board.array[i][j] == 'R') {
+					System.out.println("Found a Red");
 					Pair location = new Pair(i, j);
 					reds.add(location);
-				}
-				if (board.array[i][j] == 'G') {
+				} else if (board.array[i][j] == 'G') {
+					System.out.println("Found a green");
 					Pair location = new Pair(i, j);
 					greens.add(location);
 				}
@@ -269,7 +271,7 @@ public class AStarSliding {
 			}
 
 			// Determine east
-			if (itemFirst == this.size - 1) {
+			if (itemSecond == this.size - 1) {
 				east = false;
 			} else if (Character.isDigit(board.array[itemFirst][itemSecond + 1])
 					|| board.array[itemFirst][itemSecond + 1] == 'G') {
@@ -332,7 +334,7 @@ public class AStarSliding {
 			}
 
 			// Determine east
-			if (itemFirst == this.size - 1) {
+			if (itemSecond == this.size - 1) {
 				east = false;
 			} else if (Character.isDigit(board.array[itemFirst][itemSecond + 1])
 					|| board.array[itemFirst][itemSecond + 1] == 'R') {
