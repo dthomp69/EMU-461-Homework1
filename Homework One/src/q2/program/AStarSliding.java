@@ -28,6 +28,33 @@ public class AStarSliding {
 		}
 	}
 
+	private class Pair {
+		private int first;
+		private int second;
+
+		private Pair(int one, int two) {
+			this.setFirst(one);
+			this.setSecond(two);
+		}
+
+		public int getFirst() {
+			return first;
+		}
+
+		public void setFirst(int first) {
+			this.first = first;
+		}
+
+		public int getSecond() {
+			return second;
+		}
+
+		public void setSecond(int second) {
+			this.second = second;
+		}
+
+	}
+
 	private Board initial; // initial board
 	private Board goal; // goal board
 	private int size; // board size
@@ -52,9 +79,16 @@ public class AStarSliding {
 
 	// Constructor of SlidingAstar class
 	public AStarSliding(char[][] initial, int size) {
+		this.OutputWriter = new ProgramOutputs();
+		this.OutputWriter.determineOutputFile();
+
 		this.size = size; // set size of board
 		this.initial = new Board(initial, size); // create initial board
-		// TODO: Make a new method that determines what the goal board needs to be
+
+		System.out.println();
+		System.out.println("InitialBoard:");
+		displayBoard(this.initial);
+
 //		this.goal = new Board(goal, size); // create goal board
 		this.goal = this.findGoalBoard();
 		this.runTime = 0;
@@ -62,12 +96,13 @@ public class AStarSliding {
 		this.boardsSearched = 0;
 		this.swaps = -1; // Starts at -1, to avoid counting the initial board
 
-		this.evaluationOption = evaluationOption;
-		this.heuristicOption = heuristicOption;
+		// TODO: Make sure these are the right values
+		this.evaluationOption = 1;
+		this.heuristicOption = 3;
 
-		this.OutputWriter = new ProgramOutputs();
-		this.OutputWriter.determineOutputFile();
-
+		System.out.println("Run generate children on start:");
+		this.generate(this.initial);
+		System.out.println("Finished generating start children");
 	}
 
 	// Method solves sliding puzzle
@@ -133,65 +168,234 @@ public class AStarSliding {
 		this.runTime = endTime - startTime;
 	} // no boards in open list
 
+	// TODO:
+	/*
+	 * To generate children... For each R or G, check and see if there's a number
+	 * next to it. If there is, swap it. For each R, see if there's a G. For each G,
+	 * see if there's an R. If there are, swap them.
+	 */
+
 	// Method creates children of a board
 	private LinkedList<Board> generate(Board board) {
-		int i = 0, j = 0;
-		boolean found = false;
+//		int i = 0, j = 0;
+//		boolean found = false;
+//
+//		for (i = 0; i < size; i++) // find location of empty slot
+//		{ // of board
+//			for (j = 0; j < size; j++)
+//				// Need to be 0 or '0'?
+////				if ((board.array[i][j] == 'R') || (board.array[i][j] == 'G')) {
+//				if (board.array[i][j] == '0') {
+//					found = true;
+//					break;
+//				}
+//
+//			if (found)
+//				break;
+//		}
+//
+//		boolean north, south, east, west; // decide whether empty slot
+//		north = i == 0 ? false : true; // has N, S, E, W neighbors
+//		south = i == size - 1 ? false : true;
+//		east = j == size - 1 ? false : true;
+//		west = j == 0 ? false : true;
+//
+//		LinkedList<Board> children = new LinkedList<Board>();// list of children
+//
+//		
+//		//Do this for each R or G found.
+//		if (north)
+//			children.addLast(createChild(board, i, j, 'N')); // add N, S, E, W
+//		if (south)
+//			children.addLast(createChild(board, i, j, 'S')); // children if
+//		if (east)
+//			children.addLast(createChild(board, i, j, 'E')); // they exist
+//		if (west)
+//			children.addLast(createChild(board, i, j, 'W'));
+//
+//		return children; // return children
 
-		for (i = 0; i < size; i++) // find location of empty slot
-		{ // of board
-			for (j = 0; j < size; j++)
-				// Need to be 0 or '0'?
-				if (board.array[i][j] == '0') {
-					found = true;
-					break;
-				}
+		// Find all R & G
+		ArrayList<Pair> reds = new ArrayList<Pair>();
+		ArrayList<Pair> greens = new ArrayList<Pair>();
 
-			if (found)
-				break;
-		}
-
-		boolean north, south, east, west; // decide whether empty slot
-		north = i == 0 ? false : true; // has N, S, E, W neighbors
-		south = i == size - 1 ? false : true;
-		east = j == size - 1 ? false : true;
-		west = j == 0 ? false : true;
-
+		// The children to return
 		LinkedList<Board> children = new LinkedList<Board>();// list of children
 
-		if (north)
-			children.addLast(createChild(board, i, j, 'N')); // add N, S, E, W
-		if (south)
-			children.addLast(createChild(board, i, j, 'S')); // children if
-		if (east)
-			children.addLast(createChild(board, i, j, 'E')); // they exist
-		if (west)
-			children.addLast(createChild(board, i, j, 'W'));
+		for (int i = 0; i < this.size - 1; i++) {
+			for (int j = 0; j < this.size - 1; j++) {
+				if (board.array[i][j] == 'R') {
+					Pair location = new Pair(i, j);
+					reds.add(location);
+				}
+				if (board.array[i][j] == 'G') {
+					Pair location = new Pair(i, j);
+					greens.add(location);
+				}
+			}
+		}
 
-		return children; // return children
+		System.out.println("Initial R size: " + reds.size());
+		System.out.println("Initial G size: " + greens.size());
+
+		// Process reds
+		for (int i = 0; i < reds.size(); i++) {
+			boolean north, south, east, west; // decide whether empty slot
+
+			Pair processing = reds.get(i);
+			int itemFirst = processing.getFirst();
+			int itemSecond = processing.getSecond();
+
+			// Determine north
+			if (itemFirst == 0) {
+				north = false;
+			} else if (Character.isDigit(board.array[itemFirst - 1][itemSecond])
+					|| board.array[itemFirst - 1][itemSecond] == 'G') {
+				System.out.println("N Tripped in reds, i=" + i);
+				north = true;
+			} else {
+				north = false;
+			}
+
+			// Determine south
+			if (itemFirst == this.size - 1) {
+				south = false;
+			} else if (Character.isDigit(board.array[itemFirst + 1][itemSecond])
+					|| board.array[itemFirst + 1][itemSecond] == 'G') {
+				System.out.println("S Tripped in reds, i=" + i);
+				south = true;
+			} else {
+				south = false;
+			}
+
+			// Determine east
+			if (itemFirst == this.size - 1) {
+				east = false;
+			} else if (Character.isDigit(board.array[itemFirst][itemSecond + 1])
+					|| board.array[itemFirst][itemSecond + 1] == 'G') {
+				System.out.println("E Tripped in reds, i=" + i);
+				east = true;
+			} else {
+				east = false;
+			}
+
+			// Determine west
+			if (itemSecond == 0) {
+				west = false;
+			} else if (Character.isDigit(board.array[itemFirst][itemSecond - 1])
+					|| board.array[itemFirst][itemSecond - 1] == 'G') {
+				System.out.println("W Tripped in reds, i=" + i);
+				west = true;
+			} else {
+				west = false;
+			}
+
+			// Now, make a child for each direction
+			if (north)
+				children.addLast(createChild(board, itemFirst, itemSecond, 'N', 'R')); // add N, S, E, W
+			if (south)
+				children.addLast(createChild(board, itemFirst, itemSecond, 'S', 'R')); // children if
+			if (east)
+				children.addLast(createChild(board, itemFirst, itemSecond, 'E', 'R')); // they exist
+			if (west)
+				children.addLast(createChild(board, itemFirst, itemSecond, 'W', 'R'));
+		}
+
+		// Process greens
+		for (int i = 0; i < greens.size(); i++) {
+			boolean north, south, east, west; // decide whether empty slot
+
+			Pair processing = greens.get(i);
+			int itemFirst = processing.getFirst();
+			int itemSecond = processing.getSecond();
+
+			// Determine north
+			if (itemFirst == 0) {
+				north = false;
+			} else if (Character.isDigit(board.array[itemFirst - 1][itemSecond])
+					|| board.array[itemFirst - 1][itemSecond] == 'R') {
+				System.out.println("N Tripped in greens, i=" + i);
+				north = true;
+			} else {
+				north = false;
+			}
+
+			// Determine south
+			if (itemFirst == this.size - 1) {
+				south = false;
+			} else if (Character.isDigit(board.array[itemFirst + 1][itemSecond])
+					|| board.array[itemFirst + 1][itemSecond] == 'R') {
+				System.out.println("S Tripped in greens, i=" + i);
+				south = true;
+			} else {
+				south = false;
+			}
+
+			// Determine east
+			if (itemFirst == this.size - 1) {
+				east = false;
+			} else if (Character.isDigit(board.array[itemFirst][itemSecond + 1])
+					|| board.array[itemFirst][itemSecond + 1] == 'R') {
+				System.out.println("E Tripped in greens, i=" + i);
+				east = true;
+			} else {
+				east = false;
+			}
+
+			// Determine west
+			if (itemSecond == 0) {
+				west = false;
+			} else if (Character.isDigit(board.array[itemFirst][itemSecond - 1])
+					|| board.array[itemFirst][itemSecond - 1] == 'R') {
+				System.out.println("W Tripped in greens, i=" + i);
+				west = true;
+			} else {
+				west = false;
+			}
+
+			// Now, make a child for each direction
+			if (north)
+				children.addLast(createChild(board, itemFirst, itemSecond, 'N', 'G')); // add N, S, E, W
+			if (south)
+				children.addLast(createChild(board, itemFirst, itemSecond, 'S', 'G')); // children if
+			if (east)
+				children.addLast(createChild(board, itemFirst, itemSecond, 'E', 'G')); // they exist
+			if (west)
+				children.addLast(createChild(board, itemFirst, itemSecond, 'W', 'G'));
+		}
+
+		for (int i = 0; i < children.size(); i++) {
+			displayBoard(children.get(i));
+		}
+
+		return children;
 	}
 
 	// Method creates a child of a board by swapping empty slot in a
 	// given direction
-	private Board createChild(Board board, int i, int j, char direction) {
+	private Board createChild(Board board, int i, int j, char direction, char color) {
 		Board child = copy(board); // create copy of board
 
 		if (direction == 'N') // swap empty slot to north
 		{
+			char value = child.array[i][j];
 			child.array[i][j] = child.array[i - 1][j];
-			child.array[i - 1][j] = '0';
+			child.array[i - 1][j] = value;
 		} else if (direction == 'S') // swap empty slot to south
 		{
+			char value = child.array[i][j];
 			child.array[i][j] = child.array[i + 1][j];
-			child.array[i + 1][j] = '0';
+			child.array[i + 1][j] = value;
 		} else if (direction == 'E') // swap empty slot to east
 		{
+			char value = child.array[i][j];
 			child.array[i][j] = child.array[i][j + 1];
-			child.array[i][j + 1] = '0';
+			child.array[i][j + 1] = value;
 		} else // swap empty slot to west
 		{
+			char value = child.array[i][j];
 			child.array[i][j] = child.array[i][j - 1];
-			child.array[i][j - 1] = '0';
+			child.array[i][j - 1] = value;
 		}
 
 		child.gvalue = board.gvalue + 1; // parent path cost plus one
@@ -367,8 +571,6 @@ public class AStarSliding {
 
 	// Don't even need to pass in size, size is a variable
 	private Board findGoalBoard() {
-		// TODO: Make this work
-
 		char[][] goalBoard = new char[this.size][this.size];
 
 		// I'm 100% sure there is a better way to sort this 2d array...
@@ -421,8 +623,8 @@ public class AStarSliding {
 			}
 		}
 
-		int startOfNumbersIndexI = this.size - 1;
-		int startOfNumbersIndexJ = this.size - 1;
+//		int startOfNumbersIndexI = this.size - 1;
+//		int startOfNumbersIndexJ = this.size - 1;
 
 		boolean startedAtJ = false;
 		// Put R's in
@@ -433,8 +635,8 @@ public class AStarSliding {
 			if (startedAtJ == false) {
 				startedAtJ = true;
 				for (int j = startOfRedsIndexJ - 1; j > -1; j--) {
-					startOfNumbersIndexI = i;
-					startOfNumbersIndexJ = j;
+//					startOfNumbersIndexI = i;
+//					startOfNumbersIndexJ = j;
 					goalBoard[i][j] = 'R';
 
 					redCount--;
@@ -445,8 +647,8 @@ public class AStarSliding {
 
 			} else {
 				for (int j = this.size - 1; j > -1; j--) {
-					startOfNumbersIndexI = i;
-					startOfNumbersIndexJ = j;
+//					startOfNumbersIndexI = i;
+//					startOfNumbersIndexJ = j;
 					goalBoard[i][j] = 'R';
 
 					redCount--;
@@ -468,10 +670,10 @@ public class AStarSliding {
 		int lowestIndex = -1;
 		ArrayList<Character> sortedNumbers = new ArrayList<Character>();
 
-		System.out.println("Printing out elements going into number sorting: ");
-		for (int i = 0; i < elements.size(); i++) {
-			System.out.println(elements.get(i));
-		}
+//		System.out.println("Printing out elements going into number sorting: ");
+//		for (int i = 0; i < elements.size(); i++) {
+//			System.out.println(elements.get(i));
+//		}
 		while (!elements.isEmpty()) {
 //			for (Character item : elements) {
 //				if (item.charValue() < lowest) {
@@ -484,7 +686,7 @@ public class AStarSliding {
 //			lowest = 58;
 			for (int i = 0; i < elements.size(); i++) {
 				int comparisonValue = Character.valueOf(elements.get(i)).compareTo(lowestChar);
-				System.out.println(comparisonValue);
+//				System.out.println(comparisonValue);
 				if (comparisonValue < 0) {
 					lowestChar = elements.get(i);
 					lowestIndex = i;
@@ -496,10 +698,10 @@ public class AStarSliding {
 			lowestChar = ';';
 		}
 
-		System.out.println("Printing out the sorted numbers array: ");
-		for (int i = 0; i < sortedNumbers.size(); i++) {
-			System.out.println(sortedNumbers.get(i));
-		}
+//		System.out.println("Printing out the sorted numbers array: ");
+//		for (int i = 0; i < sortedNumbers.size(); i++) {
+//			System.out.println(sortedNumbers.get(i));
+//		}
 
 		// Have to track this separately, since it's not iterating in the same way as
 		// the array iterations
@@ -535,6 +737,8 @@ public class AStarSliding {
 		}
 
 		// Print goalBoard for testing purposes
+		System.out.println();
+		System.out.println("Goal board:");
 		for (int i = 0; i < this.size; i++) {
 			for (int j = 0; j < this.size; j++) {
 				System.out.print(goalBoard[i][j]);
