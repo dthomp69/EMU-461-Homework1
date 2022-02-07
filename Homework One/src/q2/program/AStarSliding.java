@@ -97,13 +97,13 @@ public class AStarSliding {
 		this.swaps = -1; // Starts at -1, to avoid counting the initial board
 
 		// TODO: Make sure these are the right values
-		this.evaluationOption = 1;
-		this.heuristicOption = 3;
+		this.evaluationOption = 3;
+		this.heuristicOption = 1;
 
-		System.out.println("Run generate children on start:");
-		this.generate(this.initial);
-		System.out.println("Finished generating start children");
-		System.exit(0);
+//		System.out.println("Run generate children on start:");
+//		this.generate(this.initial);
+//		System.out.println("Finished generating start children");
+//		System.exit(0);
 	}
 
 	// Method solves sliding puzzle
