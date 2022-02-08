@@ -1,11 +1,11 @@
-package q3.program;
+package mannicamFiles;
 
 import java.util.LinkedList;
 import java.util.Scanner;
 
 //This program plays tic-tac game using min-max, depth limit,
-//and board evaluation
-public class Evaluate
+//board evaluation, and alpha-beta pruning
+public class AlphaBeta
 {
     private final char EMPTY = ' ';                //empty slot
     private final char COMPUTER = 'X';             //computer
@@ -33,8 +33,8 @@ public class Evaluate
     private Board board;                           //game board
     private int size;                              //size of board
     
-    //Constructor of Evaluate class
-    public Evaluate(int size)
+    //Constructor of AlphaBeta class
+    public AlphaBeta(int size)
     {
         this.board = new Board(size);              //create game board 
         this.size = size;                          //set board size
@@ -101,7 +101,7 @@ public class Evaluate
                                                    //find the child with
         for (int i = 0; i < children.size(); i++)  //largest minmax value
         {
-            int currentValue = minmax(children.get(i), MIN, 1);
+            int currentValue = minmax(children.get(i), MIN, 1, Integer.MIN_VALUE, Integer.MAX_VALUE);
             if (currentValue > maxValue)
             {
                 maxIndex = i;
@@ -115,11 +115,11 @@ public class Evaluate
 
         displayBoard(result);                      //print next move
 
-        return result;                             //return updated board
+        return result;                             //retun updated board
     }
 
     //Method computes minmax value of a board
-    private int minmax(Board board, int level, int depth)
+    private int minmax(Board board, int level, int depth, int alpha, int beta)
     {
         if (computerWin(board) || playerWin(board) || draw(board) || depth >= LIMIT)
             return evaluate(board);                //if board is terminal or depth limit is reached
@@ -130,32 +130,44 @@ public class Evaluate
                  LinkedList<Board> children = generate(board, COMPUTER);
                                                    //generate children of board
                  int maxValue = Integer.MIN_VALUE;
-                                                   //find maximum of minmax value of children
-                 for (int i = 0; i < children.size(); i++)
-                 {                
-                     int currentValue = minmax(children.get(i), MIN, depth+1);
 
-                     if (currentValue > maxValue)
-                          maxValue = currentValue;
+                 for (int i = 0; i < children.size(); i++)
+                 {                                 //find minmax values of children
+                     int currentValue = minmax(children.get(i), MIN, depth+1, alpha, beta);
+                                                   
+                     if (currentValue > maxValue)  //find maximum of minmax values
+                         maxValue = currentValue;
+                                                   
+                     if (maxValue >= beta)         //if maximum exceeds beta stop
+                         return maxValue;
+                                                   
+                     if (maxValue > alpha)         //if maximum exceeds alpha update alpha
+                         alpha = maxValue;
                  }
 
-                 return maxValue;                  //return maximum minmax value             
+                 return maxValue;                  //return maximum value   
             }
             else                                   //if board is at min level
             {                     
                  LinkedList<Board> children = generate(board, PLAYER);
                                                    //generate children of board
                  int minValue = Integer.MAX_VALUE;
-                                                   //find minimum of minmax values of children
-                 for (int i = 0; i < children.size(); i++)
-                 {
-                     int currentValue = minmax(children.get(i), MAX, depth+1);
 
-                     if (currentValue < minValue)
-                          minValue = currentValue;
+                 for (int i = 0; i < children.size(); i++)
+                 {                                 //find minmax values of children
+                     int currentValue = minmax(children.get(i), MAX, depth+1, alpha, beta);
+                                     
+                     if (currentValue < minValue)  //find minimum of minmax values
+                         minValue = currentValue;
+                                     
+                     if (minValue <= alpha)        //if minimum is less than alpha stop
+                         return minValue;
+                                     
+                     if (minValue < beta)          //if minimum is less than beta update beta
+                         beta = minValue;
                  }
 
-                 return minValue;                  //return minimum minmax value  
+                 return minValue;                  //return minimum value 
             }
         }
     }
@@ -305,7 +317,7 @@ public class Evaluate
     }                                              //utility is difference between computer 
                                                    //and player winnings if depth limit
                                                    //is reached
-
+                                                   
     //Method counts possible ways a symbol can win
     private int count(Board board, char symbol)
     {

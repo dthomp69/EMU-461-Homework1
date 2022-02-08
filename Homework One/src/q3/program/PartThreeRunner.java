@@ -33,8 +33,11 @@ public class PartThreeRunner {
 
 //		TicTac ticTac = new TicTac(boardSize);
 //		ticTac.play();
-		Evaluate evaluate = new Evaluate(boardSize);
-		evaluate.play();
+		AlphaBeta evaluate = new AlphaBeta(boardSize);
+		evaluate.testPointEvaluation();
+
+		// TODO: uncomment below when done testing evaluation
+		// evaluate.play();
 	}
 
 }
