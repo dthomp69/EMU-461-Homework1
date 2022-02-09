@@ -34,10 +34,28 @@ public class PartThreeRunner {
 //		TicTac ticTac = new TicTac(boardSize);
 //		ticTac.play();
 		AlphaBeta evaluate = new AlphaBeta(boardSize);
-		evaluate.testPointEvaluation();
+//		evaluate.testPointEvaluation();
+//		boolean testingCheckFull;
+//		testingCheckFull = evaluate.testCheckFull();
+//		if (testingCheckFull) {
+//			System.out.println("Board returned true, was found to be full");
+//		} else {
+//			System.out.println("Board returned false, was found to not be full");
+//
+//		}
+//		boolean testingCheckFull2;
+//
+//		testingCheckFull2 = evaluate.testCheckFull2();
+//		if (testingCheckFull2) {
+//			System.out.println("Board returned true, was found to be full");
+//		} else {
+//			System.out.println("Board returned false, was found to not be full");
+//
+//		}
+		// evaluate.play();
 
 		// TODO: uncomment below when done testing evaluation
-		// evaluate.play();
+		evaluate.play();
 	}
 
 }
