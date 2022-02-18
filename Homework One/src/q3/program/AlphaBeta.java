@@ -1,5 +1,6 @@
 package q3.program;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -30,10 +31,16 @@ public class AlphaBeta {
 	private Board board; // game board
 	private int size; // size of board
 
+	private ProgramOutputs outputs;
+
 	// Constructor of AlphaBeta class
 	public AlphaBeta(int size) {
 		this.board = new Board(size); // create game board
 		this.size = size; // set board size
+
+		ProgramOutputs outputs = new ProgramOutputs();
+		this.outputs = outputs;
+		this.outputs.determineOutputFile();
 	}
 
 	// Method plays game
@@ -283,6 +290,7 @@ public class AlphaBeta {
 
 	// Method displays a board
 	private void displayBoard(Board board) {
+		this.outputs.writeBoard(this.board.array, size);
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++)
 				System.out.print(board.array[i][j]);
