@@ -6,11 +6,45 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import q1.program.InfoPasser;
+
 public class ProgramOutputs {
 	private String fileName;
 
 	public ProgramOutputs() {
 		this.fileName = "";
+	}
+
+	public void writeOutputs(String whoWon, int computerPoints, int playerPoints) {
+//		System.out.println("RunTime (Nanoseconds): " + outputs.getRunTime());
+//		System.out.println("RunTime (Milliseconds): " + outputs.getRunTime() / 1000000);
+//		System.out.println("Swaps: " + outputs.getSwaps());
+//		System.out.println("BoardsSearched: " + outputs.getBoardsSearched());
+
+		try {
+//			System.out.println("The file to write to is: " + this.fileName);
+			File file = new File(System.getProperty("user.dir") + "\\src\\q3\\output\\" + this.fileName);
+
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			FileWriter fileWriter = new FileWriter(file, true);
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+			bufferedWriter.write(whoWon + " wins!");
+			bufferedWriter.newLine();
+			bufferedWriter.write("Computer points: " + computerPoints);
+			bufferedWriter.newLine();
+			bufferedWriter.write("Player points: " + playerPoints);
+			bufferedWriter.newLine();
+
+			bufferedWriter.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void writeBoard(char[][] array, int size) {

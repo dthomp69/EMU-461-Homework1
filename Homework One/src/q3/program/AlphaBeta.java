@@ -54,6 +54,7 @@ public class AlphaBeta {
 				System.out.println("Player wins");
 				System.out.println("Final Computer Score: " + pointEvaluationComputer(board));
 				System.out.println("Final Player Score: " + pointEvaluationPlayer(board));
+				this.outputs.writeOutputs("Player", pointEvaluationComputer(board), pointEvaluationPlayer(board));
 				break;
 			}
 
@@ -62,6 +63,8 @@ public class AlphaBeta {
 				System.out.println("Computer wins");
 				System.out.println("Final Computer Score: " + pointEvaluationComputer(board));
 				System.out.println("Final Player Score: " + pointEvaluationPlayer(board));
+				this.outputs.writeOutputs("Computer", pointEvaluationComputer(board), pointEvaluationPlayer(board));
+
 				break;
 			}
 
@@ -70,6 +73,7 @@ public class AlphaBeta {
 				System.out.println("Draw");
 				System.out.println("Final Computer Score: " + pointEvaluationComputer(board));
 				System.out.println("Final Player Score: " + pointEvaluationPlayer(board));
+				this.outputs.writeOutputs("Noone", pointEvaluationComputer(board), pointEvaluationPlayer(board));
 				break;
 			}
 
@@ -80,6 +84,7 @@ public class AlphaBeta {
 				System.out.println("Computer wins");
 				System.out.println("Final Computer Score: " + pointEvaluationComputer(board));
 				System.out.println("Final Player Score: " + pointEvaluationPlayer(board));
+				this.outputs.writeOutputs("Computer", pointEvaluationComputer(board), pointEvaluationPlayer(board));
 				break;
 			}
 
@@ -88,6 +93,7 @@ public class AlphaBeta {
 				System.out.println("Player wins");
 				System.out.println("Final Computer Score: " + pointEvaluationComputer(board));
 				System.out.println("Final Player Score: " + pointEvaluationPlayer(board));
+				this.outputs.writeOutputs("Player", pointEvaluationComputer(board), pointEvaluationPlayer(board));
 				break;
 			}
 
@@ -96,6 +102,7 @@ public class AlphaBeta {
 				System.out.println("Draw");
 				System.out.println("Final Computer Score: " + pointEvaluationComputer(board));
 				System.out.println("Final Player Score: " + pointEvaluationPlayer(board));
+				this.outputs.writeOutputs("Noone", pointEvaluationComputer(board), pointEvaluationPlayer(board));
 				break;
 			}
 		}
