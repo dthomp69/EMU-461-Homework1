@@ -48,7 +48,20 @@ public class PartFourRunner {
 //			System.out.println();
 //		}
 
-		Sudoku algo = new Sudoku(convertedBoard, puzzleSize);
+		int[][] integerBoard = new int[puzzleSize][puzzleSize];
+		integerBoard = input.getInitialBoard();
+
+		// Code to print out the int board constructed by UserInputs for testing
+		// purposes
+		for (int i = 0; i < integerBoard.length; i++) {
+			for (int j = 0; j < integerBoard.length; j++) {
+				System.out.print(integerBoard[i][j] + "   ");
+			}
+			System.out.println();
+		}
+
+//		Sudoku algo = new Sudoku(convertedBoard, puzzleSize);
+		Sudoku algo = new Sudoku(integerBoard, puzzleSize);
 		algo.solve();
 
 	}

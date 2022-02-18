@@ -93,12 +93,12 @@ public class Sudoku {
 			if (i != x && board[i][y] == board[x][y])
 				return false;
 
-		a = (x / 3) * 3;
-		b = (y / 3) * 3; // check value causes conflict in
-		for (i = 0; i < 3; i++) // 3x3 region
-			for (j = 0; j < 3; j++)
-				if ((a + i != x) && (b + j != y) && board[a + i][b + j] == board[x][y])
-					return false;
+//		a = (x / 3) * 3;
+//		b = (y / 3) * 3; // check value causes conflict in
+//		for (i = 0; i < 3; i++) // 3x3 region
+//			for (j = 0; j < 3; j++)
+//				if ((a + i != x) && (b + j != y) && board[a + i][b + j] == board[x][y])
+//					return false;
 
 		return true;
 	}

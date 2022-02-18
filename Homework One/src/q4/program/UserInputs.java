@@ -6,14 +6,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
 
+/*
+ * Article on replacing multiple white spaces with a single white space:
+ * (all testing files before this one had only one white space between characters. So I had to find this to be able to read in file 7 & 8.)
+ * https://reactgo.com/java-replace-multiple-spaces-string/
+ */
 public class UserInputs {
 	private Scanner scanner;
 
 	private int puzzleSize;
-//	private int[][] initialBoard;
 
+	private int[][] initialBoard;
 	private char[][] initialBoardChar;
-	private char[][] goalBoardChar;
 
 	private boolean readFile;
 
@@ -72,11 +76,11 @@ public class UserInputs {
 
 				// remember to construct the int[][]s
 
-				// this.initialBoard = new int[this.puzzleSize][this.puzzleSize];
 //				this.goalBoard = new int[this.puzzleSize][this.puzzleSize];
 
+//				this.setInitialBoard(new int[this.puzzleSize][this.puzzleSize]);
+				this.initialBoard = new int[this.puzzleSize][this.puzzleSize];
 				this.initialBoardChar = new char[this.puzzleSize][this.puzzleSize];
-				this.goalBoardChar = new char[this.puzzleSize][this.puzzleSize];
 
 				// reads empty line
 				bufferedReader.readLine();
@@ -84,77 +88,37 @@ public class UserInputs {
 				// For the amount of lines equal to puzzle size...
 				for (int i = 0; i < this.puzzleSize; i++) {
 					String nextLine = bufferedReader.readLine();
-					String[] charArraySplit = nextLine.split("  ");
+
+					nextLine = nextLine.replaceAll("\\s+", " ");
+
+					String[] charArraySplit = nextLine.split(" ");
+
 					for (int j = 0; j < this.puzzleSize; j++) {
+						// charArraySplit[j].replace(" ", "");
 						char[] charArray = charArraySplit[j].toCharArray();
-						this.initialBoardChar[i][j] = charArray[0];
-						// TODO: make sure this is the right way to do this
-//						this.initialBoard[i][j] = Integer.parseInt(charArraySplit[j]);
+//						System.out.println("i: " + i + ", j: " + j + ", value of Char[0]: " + charArray[0]);
+						if (charArray[0] == 'b') {
+							this.initialBoard[i][j] = -1;
+						} else if (charArray[0] == 'o') {
+							this.initialBoard[i][j] = -2;
+						} else if (charArray[0] == 'e') {
+							this.initialBoard[i][j] = -3;
+						} else if (charArray[0] == 'w') {
+							this.initialBoard[i][j] = -4;
+						} else {
+							try {
+								// charArraySplit[j].replace(" ", "");
+								int stringInt = Integer.parseInt(charArraySplit[j]);
+//								System.out.println("Parsed int: " + stringInt);
+								this.initialBoard[i][j] = stringInt;
+							} catch (NumberFormatException ex) {
+
+							}
+						}
+
 					}
+
 				}
-
-//				 Printed out the initial array for testing purposes.
-//				for(int i=0; i<this.puzzleSize; i++) {
-//					for(int j=0; j<this.puzzleSize; j++) {
-//						System.out.print(this.initialBoard[i][j]);
-//					}
-//					System.out.println();
-//				}
-
-				// Printed out the initial array for testing purposes, the char version
-//				for (int i = 0; i < this.puzzleSize; i++) {
-//					for (int j = 0; j < this.puzzleSize; j++) {
-//						System.out.print(this.initialBoardChar[i][j]);
-//					}
-//					System.out.println();
-//				}
-
-				// read again to clear the next empty line;
-//				bufferedReader.readLine();
-
-				// Now read in the goal board
-//				for (int i = 0; i < this.puzzleSize; i++) {
-//					String nextLine = bufferedReader.readLine();
-//					String[] charArraySplit = nextLine.split(" ");
-//					for (int j = 0; j < this.puzzleSize; j++) {
-//						char[] charArray = charArraySplit[j].toCharArray();
-//						this.goalBoardChar[i][j] = charArray[0];
-//						this.goalBoard[i][j] = Integer.parseInt(charArraySplit[j]);
-//					}
-//				}
-
-				// Printed out the goal array for testing purposes.
-//				for(int i=0; i<this.puzzleSize; i++) {
-//					for(int j=0; j<this.puzzleSize; j++) {
-//						System.out.print(this.goalBoard[i][j]);
-//					}
-//					System.out.println();
-//				}
-
-				// Printed out the goal array for testing purposes.
-//				for(int i=0; i<this.puzzleSize; i++) {
-//					for(int j=0; j<this.puzzleSize; j++) {
-//						System.out.print(this.goalBoardChar[i][j]);
-//					}
-//					System.out.println();
-//				}
-
-				// read again to clear the next empty line;
-//				bufferedReader.readLine();
-
-				// Get evaluation option
-//				String evaluationOption = bufferedReader.readLine();
-//				this.evaluationOption = Integer.parseInt(evaluationOption);
-
-				// read again to clear the next empty line;
-//				bufferedReader.readLine();
-
-				// Get heuristic option
-//				String heuristicOption = bufferedReader.readLine();
-//				this.heuristicOption = Integer.parseInt(heuristicOption);
-
-				// Remember to close the fileReader.
-//				bufferedReader.close();
 
 			} catch (IOException e) {
 				System.out.println("Error grabbing puzzleSize");
@@ -180,20 +144,20 @@ public class UserInputs {
 		this.initialBoardChar = initialBoardChar;
 	}
 
-	public char[][] getGoalBoardChar() {
-		return goalBoardChar;
-	}
-
-	public void setGoalBoardChar(char[][] goalBoardChar) {
-		this.goalBoardChar = goalBoardChar;
-	}
-
 	public boolean getReadFile() {
 		return readFile;
 	}
 
 	public void setReadFile(boolean readFile) {
 		this.readFile = readFile;
+	}
+
+	public int[][] getInitialBoard() {
+		return initialBoard;
+	}
+
+	public void setInitialBoard(int[][] initialBoard) {
+		this.initialBoard = initialBoard;
 	}
 
 }
