@@ -178,44 +178,6 @@ public class AStarSliding {
 
 	// Method creates children of a board
 	private LinkedList<Board> generate(Board board) {
-//		int i = 0, j = 0;
-//		boolean found = false;
-//
-//		for (i = 0; i < size; i++) // find location of empty slot
-//		{ // of board
-//			for (j = 0; j < size; j++)
-//				// Need to be 0 or '0'?
-////				if ((board.array[i][j] == 'R') || (board.array[i][j] == 'G')) {
-//				if (board.array[i][j] == '0') {
-//					found = true;
-//					break;
-//				}
-//
-//			if (found)
-//				break;
-//		}
-//
-//		boolean north, south, east, west; // decide whether empty slot
-//		north = i == 0 ? false : true; // has N, S, E, W neighbors
-//		south = i == size - 1 ? false : true;
-//		east = j == size - 1 ? false : true;
-//		west = j == 0 ? false : true;
-//
-//		LinkedList<Board> children = new LinkedList<Board>();// list of children
-//
-//		
-//		//Do this for each R or G found.
-//		if (north)
-//			children.addLast(createChild(board, i, j, 'N')); // add N, S, E, W
-//		if (south)
-//			children.addLast(createChild(board, i, j, 'S')); // children if
-//		if (east)
-//			children.addLast(createChild(board, i, j, 'E')); // they exist
-//		if (west)
-//			children.addLast(createChild(board, i, j, 'W'));
-//
-//		return children; // return children
-
 		// Find all R & G
 		ArrayList<Pair> reds = new ArrayList<Pair>();
 		ArrayList<Pair> greens = new ArrayList<Pair>();
@@ -700,30 +662,6 @@ public class AStarSliding {
 			lowestChar = ';';
 		}
 
-//		System.out.println("Printing out the sorted numbers array: ");
-//		for (int i = 0; i < sortedNumbers.size(); i++) {
-//			System.out.println(sortedNumbers.get(i));
-//		}
-
-		// Have to track this separately, since it's not iterating in the same way as
-		// the array iterations
-//		int placementIndex = 0;
-//		for (int i = 0; i < this.size; i++) {
-//			if (placementIndex == sortedNumbers.size()) {
-//				break;
-//			}
-//			for (int j = 0; i < this.size; j++) {
-//				if (placementIndex + 1 == sortedNumbers.size()) {
-//					goalBoard[i][j] = sortedNumbers.get(placementIndex);
-//					placementIndex++;
-//					break;
-//				} else {
-//					goalBoard[i][j] = sortedNumbers.get(placementIndex);
-//					placementIndex++;
-//
-//				}
-//			}
-//		}
 		for (int i = 0; i < this.size; i++) {
 			if (sortedNumbers.isEmpty()) {
 				break;

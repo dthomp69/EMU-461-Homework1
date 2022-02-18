@@ -12,9 +12,6 @@ public class UserInputs {
 
 	private int puzzleSize;
 	private int[][] initialBoard;
-//	private int[][] goalBoard;
-//	private int evaluationOption;
-//	private int heuristicOption;
 
 	private char[][] initialBoardChar;
 	private char[][] goalBoardChar;
@@ -95,69 +92,6 @@ public class UserInputs {
 					}
 				}
 
-//				 Printed out the initial array for testing purposes.
-//				for(int i=0; i<this.puzzleSize; i++) {
-//					for(int j=0; j<this.puzzleSize; j++) {
-//						System.out.print(this.initialBoard[i][j]);
-//					}
-//					System.out.println();
-//				}
-
-				// Printed out the initial array for testing purposes, the char version
-//				for (int i = 0; i < this.puzzleSize; i++) {
-//					for (int j = 0; j < this.puzzleSize; j++) {
-//						System.out.print(this.initialBoardChar[i][j]);
-//					}
-//					System.out.println();
-//				}
-
-				// read again to clear the next empty line;
-//				bufferedReader.readLine();
-
-				// Now read in the goal board
-//				for (int i = 0; i < this.puzzleSize; i++) {
-//					String nextLine = bufferedReader.readLine();
-//					String[] charArraySplit = nextLine.split(" ");
-//					for (int j = 0; j < this.puzzleSize; j++) {
-//						char[] charArray = charArraySplit[j].toCharArray();
-//						this.goalBoardChar[i][j] = charArray[0];
-//						this.goalBoard[i][j] = Integer.parseInt(charArraySplit[j]);
-//					}
-//				}
-
-				// Printed out the goal array for testing purposes.
-//				for(int i=0; i<this.puzzleSize; i++) {
-//					for(int j=0; j<this.puzzleSize; j++) {
-//						System.out.print(this.goalBoard[i][j]);
-//					}
-//					System.out.println();
-//				}
-
-				// Printed out the goal array for testing purposes.
-//				for(int i=0; i<this.puzzleSize; i++) {
-//					for(int j=0; j<this.puzzleSize; j++) {
-//						System.out.print(this.goalBoardChar[i][j]);
-//					}
-//					System.out.println();
-//				}
-
-				// read again to clear the next empty line;
-//				bufferedReader.readLine();
-
-				// Get evaluation option
-//				String evaluationOption = bufferedReader.readLine();
-//				this.evaluationOption = Integer.parseInt(evaluationOption);
-
-				// read again to clear the next empty line;
-//				bufferedReader.readLine();
-
-				// Get heuristic option
-//				String heuristicOption = bufferedReader.readLine();
-//				this.heuristicOption = Integer.parseInt(heuristicOption);
-
-				// Remember to close the fileReader.
-//				bufferedReader.close();
-
 			} catch (IOException e) {
 				System.out.println("Error grabbing puzzleSize");
 			}
@@ -181,30 +115,6 @@ public class UserInputs {
 	public void setInitialBoard(int[][] initialBoard) {
 		this.initialBoard = initialBoard;
 	}
-
-//	public int[][] getGoalBoard() {
-//		return goalBoard;
-//	}
-//
-//	public void setGoalBoard(int[][] goalBoard) {
-//		this.goalBoard = goalBoard;
-//	}
-//
-//	public int getEvaluationOption() {
-//		return evaluationOption;
-//	}
-//
-//	public void setEvaluationOption(int evaluationOption) {
-//		this.evaluationOption = evaluationOption;
-//	}
-//
-//	public int getHeuristicOption() {
-//		return heuristicOption;
-//	}
-//
-//	public void setHeuristicOption(int heuristicOption) {
-//		this.heuristicOption = heuristicOption;
-//	}
 
 	public char[][] getInitialBoardChar() {
 		return initialBoardChar;

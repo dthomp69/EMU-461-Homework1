@@ -201,20 +201,7 @@ public class AlphaBeta {
 				{ 'O', 'X', 'O', 'X' } };
 		Board testBoard = new Board(4);
 		testBoard.array = testBoardArray;
-//
-//		// Print the board to verify
-//		for (int i = 0; i < testBoardArray.length; i++) {
-//			for (int j = 0; j < testBoardArray.length; j++) {
-//				System.out.print(testBoardArray[i][j]);
-//			}
-//			System.out.println();
-//		}
-//
-//		int evaluateOutComputer = pointEvaluationComputer(testBoard);
-//		int evaluateOutPlayer = pointEvaluationPlayer(testBoard);
-//
-//		System.out.println("Evaluate out computer: " + evaluateOutComputer);
-//		System.out.println("Evaluate out player: " + evaluateOutPlayer);\
+
 		return checkFull(testBoard);
 	}
 
@@ -223,20 +210,7 @@ public class AlphaBeta {
 				{ 'O', 'X', 'O', ' ' } };
 		Board testBoard = new Board(4);
 		testBoard.array = testBoardArray;
-//
-//		// Print the board to verify
-//		for (int i = 0; i < testBoardArray.length; i++) {
-//			for (int j = 0; j < testBoardArray.length; j++) {
-//				System.out.print(testBoardArray[i][j]);
-//			}
-//			System.out.println();
-//		}
-//
-//		int evaluateOutComputer = pointEvaluationComputer(testBoard);
-//		int evaluateOutPlayer = pointEvaluationPlayer(testBoard);
-//
-//		System.out.println("Evaluate out computer: " + evaluateOutComputer);
-//		System.out.println("Evaluate out player: " + evaluateOutPlayer);\
+
 		return checkFull(testBoard);
 	}
 
@@ -270,62 +244,6 @@ public class AlphaBeta {
 		return false; // check player wins
 	}
 
-	// Method checks whether row, column, or diagonal is occupied
-	// by a symbol
-//	private boolean check(Board board, char symbol) {
-//		for (int i = 0; i < size; i++) // check each row
-//			if (checkRow(board, i, symbol))
-//				return true;
-//
-//		for (int i = 0; i < size; i++) // check each column
-//			if (checkColumn(board, i, symbol))
-//				return true;
-//
-//		if (checkLeftDiagonal(board, symbol)) // check left diagonal
-//			return true;
-//
-//		if (checkRightDiagonal(board, symbol)) // check right diagonal
-//			return true;
-//
-//		return false;
-//	}
-
-	// Method checks whether a row is occupied by a symbol
-//	private boolean checkRow(Board board, int i, char symbol) {
-//		for (int j = 0; j < size; j++)
-//			if (board.array[i][j] != symbol)
-//				return false;
-//
-//		return true;
-//	}
-
-	// Method checks whether a column is occupied by a symbol
-//	private boolean checkColumn(Board board, int i, char symbol) {
-//		for (int j = 0; j < size; j++)
-//			if (board.array[j][i] != symbol)
-//				return false;
-//
-//		return true;
-//	}
-
-	// Method checks whether left diagonal is occupied a symbol
-//	private boolean checkLeftDiagonal(Board board, char symbol) {
-//		for (int i = 0; i < size; i++)
-//			if (board.array[i][i] != symbol)
-//				return false;
-//
-//		return true;
-//	}
-
-	// Method checks whether right diagonal is occupied by a symbol
-//	private boolean checkRightDiagonal(Board board, char symbol) {
-//		for (int i = 0; i < size; i++)
-//			if (board.array[i][size - 1 - i] != symbol)
-//				return false;
-//
-//		return true;
-//	}
-
 	// Method checks whether a board is full
 	private boolean full(Board board) {
 		for (int i = 0; i < size; i++)
@@ -355,36 +273,6 @@ public class AlphaBeta {
 			System.out.println();
 		}
 	}
-
-//	// Method evaluates a board
-//	private int evaluate(Board board) {
-//		if (computerWin(board)) // utility is 4*size if computer wins
-//			return 4 * size;
-//		else if (playerWin(board)) // utility is -4*size if player wins
-//			return -4 * size;
-//		else if (draw(board)) // utility is 3*size if draw
-//			return 3 * size;
-//		else
-//			return count(board, COMPUTER) - count(board, PLAYER);
-//	} // utility is difference between computer
-//		// and player winnings if depth limit
-//		// is reached
-
-//	// Method evaluates a board
-//	private int evaluate(Board board) {
-//		// TODO: determine proper winn and loss values. Raising them to be within bounds
-//		// of the point evaluation function.
-//		if (computerWin(board)) // utility is 4*size if computer wins
-//			return 4 * size;
-//		else if (playerWin(board)) // utility is -4*size if player wins
-//			return -4 * size;
-//		else if (draw(board)) // utility is 3*size if draw
-//			return 3 * size;
-//		else
-//			return count(board, COMPUTER) - count(board, PLAYER);
-//	} // utility is difference between computer
-//		// and player winnings if depth limit
-//		// is reached
 
 	// Method evaluates a board
 	private int evaluate(Board board) {
@@ -474,24 +362,12 @@ public class AlphaBeta {
 				}
 			}
 		}
-//		System.out.println("ComputerP: " + computerP);
-//		System.out.println("ComputerQ: " + computerQ);
-//
-//		System.out.println("PlayerP: " + playerP);
-//		System.out.println("PlayerQ: " + playerQ);
-//
-//		System.out.println("Computer (X) Score: " + (2 * computerP + 3 * computerQ));
-//		System.out.println("Player (O) Score: " + (2 * playerP + 3 * playerQ));
 
 		return 2 * computerP + 3 * computerQ;
 	}
 
 	private int pointEvaluationPlayer(Board board) {
-		int computerScore = 0;
-		int computerP = 0;
-		int computerQ = 0;
 
-		int playerScore = 0;
 		int playerP = 0;
 		int playerQ = 0;
 
@@ -499,33 +375,6 @@ public class AlphaBeta {
 
 		for (int i = 0; i < boardArray.length; i++) {
 			for (int j = 0; j < boardArray.length; j++) {
-				// Count computer points:
-//				if (boardArray[i][j] == 'X') {
-//					// Check vertical points
-//					// TODO: Should be checking things above it?
-//					// TODO: how to properly check verticals?
-//					if (!(i + 1 >= boardArray.length)) {
-//						if (boardArray[i + 1][j] == 'X') {
-//							computerP++;
-//							if (!(i + 2 >= boardArray.length)) {
-//								if (boardArray[i + 2][j] == 'X') {
-//									computerQ++;
-//								}
-//							}
-//						}
-//					}
-//					// Check horizontal points
-//					if (!(j + 1 >= boardArray.length)) {
-//						if (boardArray[i][j + 1] == 'X') {
-//							computerP++;
-//							if (!(j + 2 >= boardArray.length)) {
-//								if (boardArray[i][j + 2] == 'X') {
-//									computerQ++;
-//								}
-//							}
-//						}
-//					}
-//				}
 
 				// Count player points:
 				if (boardArray[i][j] == '0') {
@@ -556,14 +405,6 @@ public class AlphaBeta {
 				}
 			}
 		}
-//		System.out.println("ComputerP: " + computerP);
-//		System.out.println("ComputerQ: " + computerQ);
-//
-//		System.out.println("PlayerP: " + playerP);
-//		System.out.println("PlayerQ: " + playerQ);
-//
-//		System.out.println("Computer (X) Score: " + (2 * computerP + 3 * computerQ));
-//		System.out.println("Player (0) Score: " + (2 * playerP + 3 * playerQ));
 
 		return 2 * playerP + 3 * playerQ;
 	}
