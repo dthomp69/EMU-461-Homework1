@@ -50,6 +50,14 @@ public class AlphaBeta {
 				break;
 			}
 
+			if (computerWin(board)) // if computer wins then game is over
+			{
+				System.out.println("Computer wins");
+				System.out.println("Final Computer Score: " + pointEvaluationComputer(board));
+				System.out.println("Final Player Score: " + pointEvaluationPlayer(board));
+				break;
+			}
+
 			if (draw(board)) // if draw then game is over
 			{
 				System.out.println("Draw");
@@ -63,6 +71,14 @@ public class AlphaBeta {
 			if (computerWin(board)) // if computer wins then game is over
 			{
 				System.out.println("Computer wins");
+				System.out.println("Final Computer Score: " + pointEvaluationComputer(board));
+				System.out.println("Final Player Score: " + pointEvaluationPlayer(board));
+				break;
+			}
+
+			if (playerWin(board)) // if player wins then game is over
+			{
+				System.out.println("Player wins");
 				System.out.println("Final Computer Score: " + pointEvaluationComputer(board));
 				System.out.println("Final Player Score: " + pointEvaluationPlayer(board));
 				break;
