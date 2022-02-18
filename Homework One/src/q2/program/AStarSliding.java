@@ -188,19 +188,19 @@ public class AStarSliding {
 		for (int i = 0; i < this.size; i++) {
 			for (int j = 0; j < this.size; j++) {
 				if (board.array[i][j] == 'R') {
-					System.out.println("Found a Red");
+//					System.out.println("Found a Red");
 					Pair location = new Pair(i, j);
 					reds.add(location);
 				} else if (board.array[i][j] == 'G') {
-					System.out.println("Found a green");
+//					System.out.println("Found a green");
 					Pair location = new Pair(i, j);
 					greens.add(location);
 				}
 			}
 		}
 
-		System.out.println("Initial R size: " + reds.size());
-		System.out.println("Initial G size: " + greens.size());
+//		System.out.println("Initial R size: " + reds.size());
+//		System.out.println("Initial G size: " + greens.size());
 
 		// Process reds
 		for (int i = 0; i < reds.size(); i++) {
@@ -215,7 +215,7 @@ public class AStarSliding {
 				north = false;
 			} else if (Character.isDigit(board.array[itemFirst - 1][itemSecond])
 					|| board.array[itemFirst - 1][itemSecond] == 'G') {
-				System.out.println("N Tripped in reds, i=" + i);
+//				System.out.println("N Tripped in reds, i=" + i);
 				north = true;
 			} else {
 				north = false;
@@ -226,7 +226,7 @@ public class AStarSliding {
 				south = false;
 			} else if (Character.isDigit(board.array[itemFirst + 1][itemSecond])
 					|| board.array[itemFirst + 1][itemSecond] == 'G') {
-				System.out.println("S Tripped in reds, i=" + i);
+//				System.out.println("S Tripped in reds, i=" + i);
 				south = true;
 			} else {
 				south = false;
@@ -237,7 +237,7 @@ public class AStarSliding {
 				east = false;
 			} else if (Character.isDigit(board.array[itemFirst][itemSecond + 1])
 					|| board.array[itemFirst][itemSecond + 1] == 'G') {
-				System.out.println("E Tripped in reds, i=" + i);
+//				System.out.println("E Tripped in reds, i=" + i);
 				east = true;
 			} else {
 				east = false;
@@ -248,7 +248,7 @@ public class AStarSliding {
 				west = false;
 			} else if (Character.isDigit(board.array[itemFirst][itemSecond - 1])
 					|| board.array[itemFirst][itemSecond - 1] == 'G') {
-				System.out.println("W Tripped in reds, i=" + i);
+//				System.out.println("W Tripped in reds, i=" + i);
 				west = true;
 			} else {
 				west = false;
@@ -278,7 +278,7 @@ public class AStarSliding {
 				north = false;
 			} else if (Character.isDigit(board.array[itemFirst - 1][itemSecond])
 					|| board.array[itemFirst - 1][itemSecond] == 'R') {
-				System.out.println("N Tripped in greens, i=" + i);
+//				System.out.println("N Tripped in greens, i=" + i);
 				north = true;
 			} else {
 				north = false;
@@ -289,7 +289,7 @@ public class AStarSliding {
 				south = false;
 			} else if (Character.isDigit(board.array[itemFirst + 1][itemSecond])
 					|| board.array[itemFirst + 1][itemSecond] == 'R') {
-				System.out.println("S Tripped in greens, i=" + i);
+//				System.out.println("S Tripped in greens, i=" + i);
 				south = true;
 			} else {
 				south = false;
@@ -300,7 +300,7 @@ public class AStarSliding {
 				east = false;
 			} else if (Character.isDigit(board.array[itemFirst][itemSecond + 1])
 					|| board.array[itemFirst][itemSecond + 1] == 'R') {
-				System.out.println("E Tripped in greens, i=" + i);
+//				System.out.println("E Tripped in greens, i=" + i);
 				east = true;
 			} else {
 				east = false;
@@ -311,7 +311,7 @@ public class AStarSliding {
 				west = false;
 			} else if (Character.isDigit(board.array[itemFirst][itemSecond - 1])
 					|| board.array[itemFirst][itemSecond - 1] == 'R') {
-				System.out.println("W Tripped in greens, i=" + i);
+//				System.out.println("W Tripped in greens, i=" + i);
 				west = true;
 			} else {
 				west = false;
