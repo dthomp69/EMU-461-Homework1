@@ -6,12 +6,16 @@ public class Sudoku {
 	private int[][] board; // sudoku board
 	private int puzzleSize;
 
+	private char[][] displayBoard;
+
 	private ProgramOutputs OutputWriter;
 
 	// Constructor of Sudoku class
 	public Sudoku(int[][] board, int puzzleSize) {
 		this.board = board; // set initial board
 		this.puzzleSize = puzzleSize;
+
+		this.displayBoard = new char[this.puzzleSize][this.puzzleSize];
 
 		this.OutputWriter = new ProgramOutputs();
 		this.OutputWriter.determineOutputFile();

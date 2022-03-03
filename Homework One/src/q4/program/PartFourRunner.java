@@ -20,26 +20,6 @@ public class PartFourRunner {
 //			System.out.println();
 //		}
 
-		// Convert char board to int board using following key:
-		/*
-		 * b=-1, o=-2, e=-3, w=-4,
-		 */
-		for (int i = 0; i < initialChar.length; i++) {
-			for (int j = 0; j < initialChar.length; j++) {
-				if (initialChar[i][j] == 'b') {
-					convertedBoard[i][j] = -1;
-				} else if (initialChar[i][j] == 'o') {
-					convertedBoard[i][j] = -2;
-				} else if (initialChar[i][j] == 'e') {
-					convertedBoard[i][j] = -3;
-				} else if (initialChar[i][j] == 'w') {
-					convertedBoard[i][j] = -4;
-				} else {
-					convertedBoard[i][j] = Character.getNumericValue(initialChar[i][j]);
-				}
-			}
-		}
-
 		// Code to print out the converted to int board for testing purposes
 //		for (int i = 0; i < convertedBoard.length; i++) {
 //			for (int j = 0; j < convertedBoard.length; j++) {
@@ -53,13 +33,17 @@ public class PartFourRunner {
 
 		// Code to print out the int board constructed by UserInputs for testing
 		// purposes
-		for (int i = 0; i < integerBoard.length; i++) {
-			for (int j = 0; j < integerBoard.length; j++) {
-				System.out.print(integerBoard[i][j] + "   ");
-			}
-			System.out.println();
-		}
+//		for (int i = 0; i < integerBoard.length; i++) {
+//			for (int j = 0; j < integerBoard.length; j++) {
+//				System.out.print(integerBoard[i][j] + "   ");
+//			}
+//			System.out.println();
+//		}
 
+		// Convert char board to int board using following key:
+		/*
+		 * b=-1, o=-2, e=-3, w=-4,
+		 */
 //		Sudoku algo = new Sudoku(convertedBoard, puzzleSize);
 		Sudoku algo = new Sudoku(integerBoard, puzzleSize);
 		algo.solve();
