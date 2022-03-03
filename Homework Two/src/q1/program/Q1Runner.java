@@ -1,10 +1,12 @@
-package mannicamFiles.nearestNeighbor;
+package q1.program;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
-//Program tests nearest neighbor classifier in a specific application
-public class NearestNeighborTester {
+public class Q1Runner {
 	/*************************************************************************/
 
 	// number of nearest neighbors
@@ -12,10 +14,10 @@ public class NearestNeighborTester {
 
 	// Main method
 	public static void main(String[] args) throws IOException {
-		System.out.println(new File("originaltrainingfile").getCanonicalPath());
-		System.out.println(new File("NearestNeighborTester.java").getCanonicalPath());
 		// preprocess files
-		convertTrainingFile("originaltrainingfile", "trainingfile");
+		// TODO: Make user specified input files
+		convertTrainingFile("file1", "convertedFile1");
+		// TODO: make leave one out validation
 		convertValidationFile("originalvalidationfile", "validationfile");
 		convertTestFile("originaltestfile", "testfile");
 
@@ -23,7 +25,7 @@ public class NearestNeighborTester {
 		NearestNeighbor classifier = new NearestNeighbor();
 
 		// load training data
-		classifier.loadTrainingData("trainingfile");
+		classifier.loadTrainingData("convertedFile1");
 
 		// set nearest neighbors
 		classifier.setParameters(NEIGHBORS);
@@ -43,8 +45,7 @@ public class NearestNeighborTester {
 	// Method converts training file to numerical format
 	private static void convertTrainingFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(
-				new File(System.getProperty("user.dir") + "\\src\\mannicamFiles\\nearestNeighbor\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
 
 		// read number of records, attributes, classes
@@ -57,17 +58,28 @@ public class NearestNeighborTester {
 
 		// for each record
 		for (int i = 0; i < numberRecords; i++) {
-			String grade = inFile.next(); // convert grade
-			double gradeNumber = convertGradeToNumber(grade);
-			outFile.print(gradeNumber + " ");
+//			String grade = inFile.next(); // convert grade
+//			double gradeNumber = convertGradeToNumber(grade);
+//			outFile.print(gradeNumber + " ");
+//
+//			double gpa = inFile.nextDouble(); // convert gpa
+//			double gpaNumber = convertGPA(gpa);
+//			outFile.print(gpaNumber + " ");
+//
+//			String className = inFile.next(); // convert class name
+//			int classNumber = convertClassToNumber(className);
+//			outFile.println(classNumber);
+			int creditscore = inFile.nextInt();
 
-			double gpa = inFile.nextDouble(); // convert gpa
-			double gpaNumber = convertGPA(gpa);
-			outFile.print(gpaNumber + " ");
+			int income = inFile.nextInt();
 
-			String className = inFile.next(); // convert class name
-			int classNumber = convertClassToNumber(className);
-			outFile.println(classNumber);
+			int age = inFile.nextInt();
+
+			String gender = inFile.next();
+
+			String maritalStatus = inFile.next();
+
+			String className = inFile.next();
 		}
 
 		inFile.close();
@@ -79,8 +91,7 @@ public class NearestNeighborTester {
 	// Method converts validation file to numerical format
 	private static void convertValidationFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(
-				new File(System.getProperty("user.dir") + "\\src\\mannicamFiles\\nearestNeighbor\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
 
 		// read number of records
@@ -113,8 +124,7 @@ public class NearestNeighborTester {
 	// Method converts test file to numerical format
 	private static void convertTestFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(
-				new File(System.getProperty("user.dir") + "\\src\\mannicamFiles\\nearestNeighbor\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
 
 		// read number of records
@@ -202,5 +212,6 @@ public class NearestNeighborTester {
 			return "bad";
 	}
 
-	/****************************************************************************/
+	/**************************************************/
+
 }
