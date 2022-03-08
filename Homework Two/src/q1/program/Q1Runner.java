@@ -17,8 +17,15 @@ public class Q1Runner {
 		// preprocess files
 		// TODO: Make user specified input files
 		convertTrainingFile("file1", "convertedFile1");
+
 		// TODO: make leave one out validation
-		convertValidationFile("originalvalidationfile", "validationfile");
+		/*
+		 * Pretty sure that since there's no validation file, validation is done
+		 * entirely inside of the nearestNeighbor algorithm. Commenting out related code
+		 * inside of this class
+		 */
+//		convertValidationFile("originalvalidationfile", "validationfile");
+
 		convertTestFile("originaltestfile", "testfile");
 
 		// construct nearest neighbor classifier
@@ -31,7 +38,11 @@ public class Q1Runner {
 		classifier.setParameters(NEIGHBORS);
 
 		// validate classfier
-		classifier.validate("validationfile");
+//		classifier.validate("validationfile");
+
+		// TODO: make the below method call actually work, since that's what leave one
+		// out will be.
+//		classifier.validate();
 
 		// classify test data
 		classifier.classifyData("testfile", "classifiedfile");
@@ -46,7 +57,8 @@ public class Q1Runner {
 	private static void convertTrainingFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
 		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
-		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
+		PrintWriter outFile = new PrintWriter(
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q1\\program\\" + outputFile));
 
 		// read number of records, attributes, classes
 		int numberRecords = inFile.nextInt();
@@ -69,17 +81,28 @@ public class Q1Runner {
 //			String className = inFile.next(); // convert class name
 //			int classNumber = convertClassToNumber(className);
 //			outFile.println(classNumber);
-			int creditscore = inFile.nextInt();
+
+			// TODO: Normalize Data
+			int creditScore = inFile.nextInt();
+			outFile.print(creditScore + " ");
 
 			int income = inFile.nextInt();
+			outFile.print(income + " ");
 
 			int age = inFile.nextInt();
+			outFile.print(age + " ");
 
 			String gender = inFile.next();
+			int genderConverted = convertGender(gender);
+			outFile.print(genderConverted + " ");
 
 			String maritalStatus = inFile.next();
+			int maritalStatusConverted = convertMaritalStatus(maritalStatus);
+			outFile.print(maritalStatusConverted + " ");
 
 			String className = inFile.next();
+			int convertedClass = convertClass(className);
+			outFile.println(convertedClass);
 		}
 
 		inFile.close();
@@ -89,35 +112,35 @@ public class Q1Runner {
 	/*************************************************************************/
 
 	// Method converts validation file to numerical format
-	private static void convertValidationFile(String inputFile, String outputFile) throws IOException {
-		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
-		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
-
-		// read number of records
-		int numberRecords = inFile.nextInt();
-
-		// write number of records
-		outFile.println(numberRecords);
-
-		// for each record
-		for (int i = 0; i < numberRecords; i++) {
-			String grade = inFile.next(); // convert grade
-			double gradeNumber = convertGradeToNumber(grade);
-			outFile.print(gradeNumber + " ");
-
-			double gpa = inFile.nextDouble(); // convert gpa
-			double gpaNumber = convertGPA(gpa);
-			outFile.print(gpaNumber + " ");
-
-			String className = inFile.next(); // convert class name
-			int classNumber = convertClassToNumber(className);
-			outFile.println(classNumber);
-		}
-
-		inFile.close();
-		outFile.close();
-	}
+//	private static void convertValidationFile(String inputFile, String outputFile) throws IOException {
+//		// input and output files
+//		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
+//		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
+//
+//		// read number of records
+//		int numberRecords = inFile.nextInt();
+//
+//		// write number of records
+//		outFile.println(numberRecords);
+//
+//		// for each record
+//		for (int i = 0; i < numberRecords; i++) {
+//			String grade = inFile.next(); // convert grade
+//			double gradeNumber = convertGradeToNumber(grade);
+//			outFile.print(gradeNumber + " ");
+//
+//			double gpa = inFile.nextDouble(); // convert gpa
+//			double gpaNumber = convertGPA(gpa);
+//			outFile.print(gpaNumber + " ");
+//
+//			String className = inFile.next(); // convert class name
+//			int classNumber = convertClassToNumber(className);
+//			outFile.println(classNumber);
+//		}
+//
+//		inFile.close();
+//		outFile.close();
+//	}
 
 	/*************************************************************************/
 
@@ -213,5 +236,47 @@ public class Q1Runner {
 	}
 
 	/**************************************************/
+
+	private static int convertGender(String gender) {
+		if (gender.equals("male")) {
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+
+	/****************************************************/
+
+	private static int convertMaritalStatus(String maritalStatus) {
+		if (maritalStatus.equals("single")) {
+			return 0;
+		}
+		if (maritalStatus.equals("married")) {
+			return 1;
+		}
+		if (maritalStatus.equals("divorced")) {
+			return 2;
+		}
+		// Should never have to return -1, error check basically
+		return -1;
+	}
+
+	/*********************************************************/
+
+	private static int convertClass(String className) {
+		if (className.equals("undetermined")) {
+			return 0;
+		}
+		if (className.equals("low")) {
+			return 1;
+		}
+		if (className.equals("medium")) {
+			return 2;
+		}
+		if (className.equals("high")) {
+			return 3;
+		}
+		return -1;
+	}
 
 }
