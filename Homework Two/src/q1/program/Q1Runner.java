@@ -43,6 +43,7 @@ public class Q1Runner {
 		// TODO: make the below method call actually work, since that's what leave one
 		// out will be.
 //		classifier.validate();
+		classifier.validate("convertedFile1");
 
 		// classify test data
 		classifier.classifyData("convertedFile2", "NNOut");
