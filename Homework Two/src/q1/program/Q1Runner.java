@@ -230,9 +230,9 @@ public class Q1Runner {
 	// Method converts classified file to text format
 	private static void convertClassFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\output\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\q1\\program\\" + outputFile));
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q1\\output\\" + outputFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
