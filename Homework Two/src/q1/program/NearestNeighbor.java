@@ -27,6 +27,8 @@ public class NearestNeighbor {
 	private int numberNeighbors; // number of nearest neighbors
 	private ArrayList<Record> records; // list of training records
 
+	private double ErrorPercent;
+
 	/*************************************************************************/
 
 	// Constructor of NearestNeighbor
@@ -37,6 +39,8 @@ public class NearestNeighbor {
 		numberClasses = 0;
 		numberNeighbors = 0;
 		records = null;
+
+		ErrorPercent = 0.0;
 	}
 
 	/*************************************************************************/
@@ -109,9 +113,16 @@ public class NearestNeighbor {
 			// find class of attributes
 			int className = classify(attributeArray);
 
+			// Write other attributes
+			for (int j = 0; j < attributeArray.length; j++) {
+				outFile.print(attributeArray[j] + " ");
+			}
+
 			// write class name
 			outFile.println(className);
 		}
+
+		outFile.println("Validation error: " + this.ErrorPercent + "%");
 
 		inFile.close();
 		outFile.close();
@@ -265,7 +276,9 @@ public class NearestNeighbor {
 
 		// find and print error rate
 		double errorRate = 100.0 * numberErrors / numberRecords;
+		this.ErrorPercent = errorRate;
 		System.out.println("validation error: " + errorRate + "%");
 	}
+
 	/************************************************************************/
 }

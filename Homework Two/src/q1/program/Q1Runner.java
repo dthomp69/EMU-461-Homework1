@@ -84,14 +84,34 @@ public class Q1Runner {
 //			outFile.println(classNumber);
 
 			// Normalize Data
+//			int creditScore = inFile.nextInt();
+//			outFile.print(creditScore + " ");
+//
+//			int income = inFile.nextInt();
+//			outFile.print(income + " ");
+//
+//			int age = inFile.nextInt();
+//			outFile.print(age + " ");
+//
+//			String gender = inFile.next();
+//			int genderConverted = convertGender(gender);
+//			outFile.print(genderConverted + " ");
+//
+//			String maritalStatus = inFile.next();
+//			int maritalStatusConverted = convertMaritalStatus(maritalStatus);
+//			outFile.print(maritalStatusConverted + " ");
+
 			int creditScore = inFile.nextInt();
-			outFile.print(creditScore + " ");
+			double creditScoreNormalized = normalizeCreditScore(creditScore);
+			outFile.print(creditScoreNormalized + " ");
 
 			int income = inFile.nextInt();
-			outFile.print(income + " ");
+			double incomeNormalized = normalizeIncome(income);
+			outFile.print(incomeNormalized + " ");
 
 			int age = inFile.nextInt();
-			outFile.print(age + " ");
+			double ageNormalized = normalizeAge(age);
+			outFile.print(ageNormalized + " ");
 
 			String gender = inFile.next();
 			int genderConverted = convertGender(gender);
@@ -99,7 +119,8 @@ public class Q1Runner {
 
 			String maritalStatus = inFile.next();
 			int maritalStatusConverted = convertMaritalStatus(maritalStatus);
-			outFile.print(maritalStatusConverted + " ");
+			double normalizedMaritalStatus = normalizeMaritalStatus(maritalStatusConverted);
+			outFile.print(normalizedMaritalStatus + " ");
 
 			String className = inFile.next();
 			int convertedClass = convertClass(className);
@@ -172,13 +193,16 @@ public class Q1Runner {
 
 			// Normalize data
 			int creditScore = inFile.nextInt();
-			outFile.print(creditScore + " ");
+			double creditScoreNormalized = normalizeCreditScore(creditScore);
+			outFile.print(creditScoreNormalized + " ");
 
 			int income = inFile.nextInt();
-			outFile.print(income + " ");
+			double incomeNormalized = normalizeIncome(income);
+			outFile.print(incomeNormalized + " ");
 
 			int age = inFile.nextInt();
-			outFile.print(age + " ");
+			double ageNormalized = normalizeAge(age);
+			outFile.print(ageNormalized + " ");
 
 			String gender = inFile.next();
 			int genderConverted = convertGender(gender);
@@ -186,7 +210,8 @@ public class Q1Runner {
 
 			String maritalStatus = inFile.next();
 			int maritalStatusConverted = convertMaritalStatus(maritalStatus);
-			outFile.print(maritalStatusConverted + " ");
+			double normalizedMaritalStatus = normalizeMaritalStatus(maritalStatusConverted);
+			outFile.print(normalizedMaritalStatus + " ");
 
 			outFile.println();
 
@@ -217,10 +242,40 @@ public class Q1Runner {
 
 		// for each record
 		for (int i = 0; i < numberRecords; i++) {
+			/*********************************/
+			double creditScore = inFile.nextDouble();
+			double creditScoreDenormalized = deNormalizeCreditScore(creditScore);
+			outFile.print(creditScoreDenormalized + " ");
+
+			double income = inFile.nextDouble();
+			double incomeDenormalized = deNormalizeIncome(income);
+			outFile.print(incomeDenormalized + " ");
+
+			double age = inFile.nextDouble();
+			double ageDenormalized = deNormalizeAge(age);
+			outFile.print(ageDenormalized + " ");
+
+			double gender = inFile.nextDouble();
+			String genderConverted = deNormalizeGender(gender);
+			outFile.print(genderConverted + " ");
+
+			double maritalStatus = inFile.nextDouble();
+			double maritalStatusConverted = deNormalizeMaritalStatus(maritalStatus);
+			String deConvertMaritalStatus = deConvertMaritalStatus(maritalStatusConverted);
+			outFile.print(deConvertMaritalStatus + " ");
+			/******************************/
+
 			int number = inFile.nextInt(); // convert class number
 			String className = convertNumberToClass(number);
 			outFile.println(className);
 		}
+
+		// For some reason it won't just let me call outFile.println(inFile.nextLine()),
+		// so I
+		// manually did it like this.
+		outFile.print(inFile.next() + " ");
+		outFile.print(inFile.next() + " ");
+		outFile.println(inFile.next());
 
 		inFile.close();
 		outFile.close();
@@ -322,4 +377,57 @@ public class Q1Runner {
 		return -1;
 	}
 
+	/*************************************************************/
+	private static double normalizeCreditScore(double value) {
+		return 1 - ((value - 500) / (900 - 500));
+	}
+
+	private static double normalizeIncome(double value) {
+		return 1 - ((value - 30) / (90 - 30));
+	}
+
+	private static double normalizeAge(double value) {
+		return 1 - ((value - 30) / (80 - 30));
+	}
+
+	private static double normalizeMaritalStatus(double value) {
+		return 1 - ((value - 0) / (2 - 0));
+	}
+
+	/*****************************************************************/
+	private static double deNormalizeCreditScore(double value) {
+		return ((1 - value) * 400) + 500;
+	}
+
+	private static double deNormalizeIncome(double value) {
+		return ((1 - value) * 60) + 30;
+	}
+
+	private static double deNormalizeAge(double value) {
+		return ((1 - value) * 50) + 30;
+	}
+
+	private static double deNormalizeMaritalStatus(double value) {
+		return ((1 - value) * 2);
+	}
+
+	private static String deNormalizeGender(double value) {
+		if (value == 0.0) {
+			return "Male";
+		}
+		return "Female";
+	}
+
+	private static String deConvertMaritalStatus(double value) {
+		if (value == 0.0) {
+			return "Single";
+		}
+		if (value == 1.0) {
+			return "Married";
+		}
+		if (value == 2.0) {
+			return "Divorced";
+		}
+		return "Error";
+	}
 }
