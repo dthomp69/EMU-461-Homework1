@@ -152,10 +152,10 @@ public class Q1Runner {
 				new FileWriter(System.getProperty("user.dir") + "\\src\\q1\\program\\" + outputFile));
 
 		// read number of records
-//		int numberRecords = inFile.nextInt();
+		int numberRecords = inFile.nextInt();
 
 		// write number of records
-//		outFile.println(numberRecords);
+		outFile.println(numberRecords);
 
 		// TODO: How do I know when to stop if there's no number of records at the top?
 		// for each record
@@ -204,8 +204,9 @@ public class Q1Runner {
 	// Method converts classified file to text format
 	private static void convertClassFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(new File(inputFile));
-		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
+		PrintWriter outFile = new PrintWriter(
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q1\\program\\" + outputFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
@@ -257,10 +258,23 @@ public class Q1Runner {
 
 	// Method converts number to class name
 	private static String convertNumberToClass(int number) {
-		if (number == 1)
-			return "good";
-		else
-			return "bad";
+//		if (number == 1)
+//			return "good";
+//		else
+//			return "bad";
+		if (number == 1) {
+			return "undetermined";
+		}
+		if (number == 2) {
+			return "low";
+		}
+		if (number == 3) {
+			return "medium";
+		}
+		if (number == 4) {
+			return "high";
+		}
+		return "Error";
 	}
 
 	/**************************************************/
@@ -293,16 +307,16 @@ public class Q1Runner {
 
 	private static int convertClass(String className) {
 		if (className.equals("undetermined")) {
-			return 0;
-		}
-		if (className.equals("low")) {
 			return 1;
 		}
-		if (className.equals("medium")) {
+		if (className.equals("low")) {
 			return 2;
 		}
-		if (className.equals("high")) {
+		if (className.equals("medium")) {
 			return 3;
+		}
+		if (className.equals("high")) {
+			return 4;
 		}
 		return -1;
 	}
