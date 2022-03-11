@@ -47,7 +47,7 @@ public class NearestNeighbor {
 
 	// Method loads data from training file
 	public void loadTrainingData(String trainingFile) throws IOException {
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + trainingFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q2\\program\\" + trainingFile));
 
 		// read number of records, attributes, classes
 		numberRecords = inFile.nextInt();
@@ -64,7 +64,7 @@ public class NearestNeighbor {
 
 			// read attribute values
 			for (int j = 0; j < numberAttributes; j++)
-				attributeArray[j] = inFile.nextDouble();
+				attributeArray[j] = inFile.nextInt();
 
 			// read class name
 			int className = inFile.nextInt();
@@ -91,9 +91,9 @@ public class NearestNeighbor {
 	// Method reads records from test file, determines their classes,
 	// and writes classes to classified file
 	public void classifyData(String testFile, String classifiedFile) throws IOException {
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + testFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q2\\program\\" + testFile));
 		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\q1\\output\\" + classifiedFile));
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q2\\output\\" + classifiedFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();

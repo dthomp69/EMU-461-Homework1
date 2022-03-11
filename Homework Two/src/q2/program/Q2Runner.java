@@ -25,7 +25,7 @@ public class Q2Runner {
 
 		// preprocess files
 		// TODO: Make user specified input files
-		convertTrainingFile(file1Name, "convertedFile1");
+//		convertTrainingFile(file1Name, "convertedFile1");
 
 		// TODO: make leave one out validation
 		/*
@@ -35,13 +35,13 @@ public class Q2Runner {
 		 */
 //		convertValidationFile("originalvalidationfile", "validationfile");
 
-		convertTestFile(file2Name, "convertedFile2");
+//		convertTestFile(file2Name, "convertedFile2");
 
 		// construct nearest neighbor classifier
 		NearestNeighbor classifier = new NearestNeighbor();
 
 		// load training data
-		classifier.loadTrainingData("convertedFile1");
+		classifier.loadTrainingData(file1Name);
 
 		// set nearest neighbors
 		classifier.setParameters(NEIGHBORS);
@@ -52,10 +52,10 @@ public class Q2Runner {
 		// TODO: make the below method call actually work, since that's what leave one
 		// out will be.
 //		classifier.validate();
-		classifier.validate("convertedFile1");
+		classifier.validate(file1Name);
 
 		// classify test data
-		classifier.classifyData("convertedFile2", "NNOut");
+		classifier.classifyData(file2Name, "NNOut");
 
 		// postprocess files
 		convertClassFile("NNOut", "NNOutConverted");
