@@ -63,8 +63,19 @@ public class NearestNeighbor {
 			double[] attributeArray = new double[numberAttributes];
 
 			// read attribute values
-			for (int j = 0; j < numberAttributes; j++)
+			for (int j = 0; j < numberAttributes; j++) {
+				// Changing scale from [0,1] to [1,2], to see if that fixes an error I'm having
+//				int rawAttribute = inFile.nextInt();
+//				if (rawAttribute == 0) {
+//					attributeArray[j] = 1;
+//				}
+//				if (rawAttribute == 1) {
+//					attributeArray[j] = 2;
+//				}
+
+				// Didn't seem to work, keeping normal
 				attributeArray[j] = inFile.nextInt();
+			}
 
 			// read class name
 			int className = inFile.nextInt();
@@ -72,9 +83,25 @@ public class NearestNeighbor {
 			// create record
 			Record record = new Record(attributeArray, className);
 
+//			if (className == 1) {
+//				Record record = new Record(attributeArray, 2);
+//				records.add(record);
+//			} else {
+//				Record record = new Record(attributeArray, 1);
+//				records.add(record);
+//			}
+
 			// add record to list of records
 			records.add(record);
+
 		}
+
+//		System.out.println("Data initialized in loadTrainingData");
+//		System.out.println("Number of records:" + numberRecords);
+//		System.out.println("Number of attributes:" + numberAttributes);
+//		System.out.println("Number of classes:" + numberClasses);
+//
+//		System.out.println("Real number of records:" + records.size());
 
 		inFile.close();
 	}
@@ -115,6 +142,15 @@ public class NearestNeighbor {
 
 			// Write other attributes
 			for (int j = 0; j < attributeArray.length; j++) {
+//				if (j == 0) {
+//					outFile.print((int) attributeArray[j] + " ");
+//				} else {
+//					if (j % 16 == 0) {
+//						outFile.println((int) attributeArray[j] + " ");
+//					} else {
+//						outFile.print((int) attributeArray[j] + " ");
+//					}
+//				}
 				outFile.print(attributeArray[j] + " ");
 			}
 

@@ -10,7 +10,7 @@ public class Q2Runner {
 	/*************************************************************************/
 
 	// number of nearest neighbors
-	private static final int NEIGHBORS = 2;
+	private static final int NEIGHBORS = 3;
 
 	// Main method
 	public static void main(String[] args) throws IOException {
@@ -25,7 +25,7 @@ public class Q2Runner {
 
 		// preprocess files
 		// TODO: Make user specified input files
-//		convertTrainingFile(file1Name, "convertedFile1");
+		convertTrainingFile(file1Name, "convertedTrainingData");
 
 		// TODO: make leave one out validation
 		/*
@@ -35,27 +35,27 @@ public class Q2Runner {
 		 */
 //		convertValidationFile("originalvalidationfile", "validationfile");
 
-//		convertTestFile(file2Name, "convertedFile2");
+		convertTestFile(file2Name, "convertedTestData");
 
 		// construct nearest neighbor classifier
 		NearestNeighbor classifier = new NearestNeighbor();
 
 		// load training data
-		classifier.loadTrainingData(file1Name);
+		classifier.loadTrainingData("convertedTrainingData");
 
 		// set nearest neighbors
 		classifier.setParameters(NEIGHBORS);
 
 		// validate classfier
-//		classifier.validate("validationfile");
+		classifier.validate("validationfile");
 
 		// TODO: make the below method call actually work, since that's what leave one
 		// out will be.
 //		classifier.validate();
-		classifier.validate(file1Name);
+		// classifier.validate(file1Name);
 
 		// classify test data
-		classifier.classifyData(file2Name, "NNOut");
+		classifier.classifyData("convertedTestData", "NNOut");
 
 		// postprocess files
 		convertClassFile("NNOut", "NNOutConverted");
@@ -66,9 +66,9 @@ public class Q2Runner {
 	// Method converts training file to numerical format
 	private static void convertTrainingFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q2\\program\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\q1\\program\\" + outputFile));
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q2\\program\\" + outputFile));
 
 		// read number of records, attributes, classes
 		int numberRecords = inFile.nextInt();
@@ -78,62 +78,48 @@ public class Q2Runner {
 		// write number of records, attributes, classes
 		outFile.println(numberRecords + " " + numberAttributes + " " + numberClasses);
 
+		// Bonus line for spacing
+		outFile.println();
+
 		// for each record
 		for (int i = 0; i < numberRecords; i++) {
-//			String grade = inFile.next(); // convert grade
-//			double gradeNumber = convertGradeToNumber(grade);
-//			outFile.print(gradeNumber + " ");
-//
-//			double gpa = inFile.nextDouble(); // convert gpa
-//			double gpaNumber = convertGPA(gpa);
-//			outFile.print(gpaNumber + " ");
-//
-//			String className = inFile.next(); // convert class name
-//			int classNumber = convertClassToNumber(className);
-//			outFile.println(classNumber);
-
-			// Normalize Data
-//			int creditScore = inFile.nextInt();
-//			outFile.print(creditScore + " ");
-//
-//			int income = inFile.nextInt();
-//			outFile.print(income + " ");
-//
-//			int age = inFile.nextInt();
-//			outFile.print(age + " ");
-//
-//			String gender = inFile.next();
-//			int genderConverted = convertGender(gender);
-//			outFile.print(genderConverted + " ");
-//
-//			String maritalStatus = inFile.next();
-//			int maritalStatusConverted = convertMaritalStatus(maritalStatus);
-//			outFile.print(maritalStatusConverted + " ");
-
-			int creditScore = inFile.nextInt();
-			double creditScoreNormalized = normalizeCreditScore(creditScore);
-			outFile.print(creditScoreNormalized + " ");
-
-			int income = inFile.nextInt();
-			double incomeNormalized = normalizeIncome(income);
-			outFile.print(incomeNormalized + " ");
-
-			int age = inFile.nextInt();
-			double ageNormalized = normalizeAge(age);
-			outFile.print(ageNormalized + " ");
-
-			String gender = inFile.next();
-			int genderConverted = convertGender(gender);
-			outFile.print(genderConverted + " ");
-
-			String maritalStatus = inFile.next();
-			int maritalStatusConverted = convertMaritalStatus(maritalStatus);
-			double normalizedMaritalStatus = normalizeMaritalStatus(maritalStatusConverted);
-			outFile.print(normalizedMaritalStatus + " ");
-
-			String className = inFile.next();
-			int convertedClass = convertClass(className);
-			outFile.println(convertedClass);
+			for (int j = 1; j <= numberAttributes; j++) {
+				int attributeName = inFile.nextInt();
+				int convertedAttribute = -1;
+				if (attributeName == 0) {
+					convertedAttribute = 1;
+				}
+				if (attributeName == 1) {
+					convertedAttribute = 2;
+				}
+				// Print as a new line if it's time to go to the next line
+//				if (j % 15 != 0 || j == 0) {
+//					if (attributeName == 0) {
+//						outFile.print(1 + " ");
+//					} else {
+//						outFile.print(2 + " ");
+//					}
+//				} else {
+//					if (attributeName == 0) {
+//						outFile.println(1 + " ");
+//					} else {
+//						outFile.println(2 + " ");
+//					}
+//				}
+				if (j % 16 == 0 && j != 0) {
+					outFile.println(convertedAttribute + " ");
+				} else {
+					outFile.print(convertedAttribute + " ");
+				}
+			}
+			int className = inFile.nextInt();
+			if (className == 0) {
+				outFile.println(1 + " ");
+			} else {
+				outFile.println(2 + " ");
+			}
+			// Bonus line for spacing between entries
+			outFile.println();
 		}
 
 		inFile.close();
@@ -142,45 +128,12 @@ public class Q2Runner {
 
 	/*************************************************************************/
 
-	// Method converts validation file to numerical format
-//	private static void convertValidationFile(String inputFile, String outputFile) throws IOException {
-//		// input and output files
-//		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
-//		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
-//
-//		// read number of records
-//		int numberRecords = inFile.nextInt();
-//
-//		// write number of records
-//		outFile.println(numberRecords);
-//
-//		// for each record
-//		for (int i = 0; i < numberRecords; i++) {
-//			String grade = inFile.next(); // convert grade
-//			double gradeNumber = convertGradeToNumber(grade);
-//			outFile.print(gradeNumber + " ");
-//
-//			double gpa = inFile.nextDouble(); // convert gpa
-//			double gpaNumber = convertGPA(gpa);
-//			outFile.print(gpaNumber + " ");
-//
-//			String className = inFile.next(); // convert class name
-//			int classNumber = convertClassToNumber(className);
-//			outFile.println(classNumber);
-//		}
-//
-//		inFile.close();
-//		outFile.close();
-//	}
-
-	/*************************************************************************/
-
 	// Method converts test file to numerical format
 	private static void convertTestFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q2\\program\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\q1\\program\\" + outputFile));
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q2\\program\\" + outputFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
@@ -188,46 +141,37 @@ public class Q2Runner {
 		// write number of records
 		outFile.println(numberRecords);
 
-		// TODO: How do I know when to stop if there's no number of records at the top?
-		// for each record
-//		for (int i = 0; i < numberRecords; i++) {
-		while (inFile.hasNext()) {
-//			String grade = inFile.next(); // convert grade
-//			double gradeNumber = convertGradeToNumber(grade);
-//			outFile.print(gradeNumber + " ");
-//
-//			double gpa = inFile.nextDouble(); // convert gpa
-//			double gpaNumber = convertGPA(gpa);
-//			outFile.println(gpaNumber + " ");
+		// Bonus line for spacing
+		outFile.println();
 
-			// Normalize data
-			int creditScore = inFile.nextInt();
-			double creditScoreNormalized = normalizeCreditScore(creditScore);
-			outFile.print(creditScoreNormalized + " ");
+		for (int i = 0; i < numberRecords; i++) {
 
-			int income = inFile.nextInt();
-			double incomeNormalized = normalizeIncome(income);
-			outFile.print(incomeNormalized + " ");
+			for (int j = 1; j <= 256; j++) {
+				int attributeName = inFile.nextInt();
+				// Print as a new line if you're done with that row
+				if (j % 16 != 0 || j == 0) {
+					if (attributeName == 0) {
+						outFile.print(1 + " ");
+					} else {
+						outFile.print(2 + " ");
+					}
+				} else {
+					if (attributeName == 0) {
+						outFile.println(1 + " ");
+					} else {
+						outFile.println(2 + " ");
+					}
+				}
+			}
+//			int className = inFile.nextInt();
+//			if (className == 0) {
+//				outFile.print(1 + " ");
+//			} else {
+//				outFile.print(2 + " ");
+//			}
 
-			int age = inFile.nextInt();
-			double ageNormalized = normalizeAge(age);
-			outFile.print(ageNormalized + " ");
-
-			String gender = inFile.next();
-			int genderConverted = convertGender(gender);
-			outFile.print(genderConverted + " ");
-
-			String maritalStatus = inFile.next();
-			int maritalStatusConverted = convertMaritalStatus(maritalStatus);
-			double normalizedMaritalStatus = normalizeMaritalStatus(maritalStatusConverted);
-			outFile.print(normalizedMaritalStatus + " ");
-
+			// Print a bonus line so spacing makes sense
 			outFile.println();
-
-			// No class to normalize
-//			String className = inFile.next();
-//			int convertedClass = convertClass(className);
-//			outFile.println(convertedClass);
 		}
 
 		inFile.close();
@@ -239,9 +183,9 @@ public class Q2Runner {
 	// Method converts classified file to text format
 	private static void convertClassFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\output\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q2\\output\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\q1\\output\\" + outputFile));
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q2\\output\\" + outputFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
@@ -249,34 +193,31 @@ public class Q2Runner {
 		// write number of records
 		outFile.println(numberRecords);
 
-		// for each record
 		for (int i = 0; i < numberRecords; i++) {
-			/*********************************/
-			double creditScore = inFile.nextDouble();
-			double creditScoreDenormalized = deNormalizeCreditScore(creditScore);
-			outFile.print(creditScoreDenormalized + " ");
 
-			double income = inFile.nextDouble();
-			double incomeDenormalized = deNormalizeIncome(income);
-			outFile.print(incomeDenormalized + " ");
-
-			double age = inFile.nextDouble();
-			double ageDenormalized = deNormalizeAge(age);
-			outFile.print(ageDenormalized + " ");
-
-			double gender = inFile.nextDouble();
-			String genderConverted = deNormalizeGender(gender);
-			outFile.print(genderConverted + " ");
-
-			double maritalStatus = inFile.nextDouble();
-			double maritalStatusConverted = deNormalizeMaritalStatus(maritalStatus);
-			String deConvertMaritalStatus = deConvertMaritalStatus(maritalStatusConverted);
-			outFile.print(deConvertMaritalStatus + " ");
-			/******************************/
-
-			int number = inFile.nextInt(); // convert class number
-			String className = convertNumberToClass(number);
-			outFile.println(className);
+			for (int j = 1; j <= 256; j++) {
+				int attributeName = (int) inFile.nextDouble();
+				// Print as a new line if you're done with that row
+				if (j % 16 != 0 || j == 0) {
+					if (attributeName == 1) {
+						outFile.print(0 + " ");
+					} else {
+						outFile.print(1 + " ");
+					}
+				} else {
+					if (attributeName == 1) {
+						outFile.println(0 + " ");
+					} else {
+						outFile.println(1 + " ");
+					}
+				}
+			}
+			int className = (int) inFile.nextDouble();
+			if (className == 2) {
+				outFile.println(1);
+			} else {
+				outFile.println(0);
+			}
 		}
 
 		// For some reason it won't just let me call outFile.println(inFile.nextLine()),
