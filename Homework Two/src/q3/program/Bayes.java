@@ -217,7 +217,7 @@ public class Bayes {
 	public void classifyData(String testFile, String classifiedFile) throws IOException {
 		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program\\" + testFile));
 		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\program\\" + classifiedFile));
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\output\\" + classifiedFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
