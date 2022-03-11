@@ -14,9 +14,19 @@ public class Q1Runner {
 
 	// Main method
 	public static void main(String[] args) throws IOException {
+
+		// Gets file names. NO ERROR PREVENTION
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Name of trainingData?");
+		String file1Name = scanner.nextLine();
+		System.out.println("Name of testingData?");
+		String file2Name = scanner.nextLine();
+//		System.out.println(file1Name);
+//		System.out.println(file2Name);
+
 		// preprocess files
 		// TODO: Make user specified input files
-		convertTrainingFile("file1", "convertedFile1");
+		convertTrainingFile(file1Name, "convertedFile1");
 
 		// TODO: make leave one out validation
 		/*
@@ -26,7 +36,7 @@ public class Q1Runner {
 		 */
 //		convertValidationFile("originalvalidationfile", "validationfile");
 
-		convertTestFile("file2", "convertedFile2");
+		convertTestFile(file2Name, "convertedFile2");
 
 		// construct nearest neighbor classifier
 		NearestNeighbor classifier = new NearestNeighbor();
