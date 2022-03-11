@@ -10,7 +10,7 @@ public class Q2Runner {
 	/*************************************************************************/
 
 	// number of nearest neighbors
-	private static final int NEIGHBORS = 5;
+	private static final int NEIGHBORS = 2;
 
 	// Main method
 	public static void main(String[] args) throws IOException {
