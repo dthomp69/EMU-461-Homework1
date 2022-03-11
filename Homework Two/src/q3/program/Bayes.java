@@ -29,6 +29,8 @@ public class Bayes {
 	double[][][] table; // conditional probabilities
 	double[] classTable; // class probabilities
 
+	private double ErrorPercent;
+
 	/*************************************************************************/
 
 	// Constructor of Bayes
@@ -41,6 +43,8 @@ public class Bayes {
 		attributeValues = null;
 		table = null;
 		classTable = null;
+
+		ErrorPercent = 0.0;
 	}
 
 	/*************************************************************************/
@@ -227,8 +231,14 @@ public class Bayes {
 			int[] attributeArray = new int[numberAttributes];
 
 			// read attributes
-			for (int j = 0; j < numberAttributes; j++)
+			for (int j = 0; j < numberAttributes; j++) {
 				attributeArray[j] = inFile.nextInt();
+			}
+
+			// Print out the attributes
+			for (int j = 0; j < numberAttributes; j++) {
+				outFile.print(attributeArray[j] + " ");
+			}
 
 			// find class of attributes
 			int className = classify(attributeArray);
@@ -236,6 +246,9 @@ public class Bayes {
 			// write class name
 			outFile.println(className);
 		}
+
+		// Print the validation error
+		outFile.println("Validation error: " + this.ErrorPercent + "%");
 
 		inFile.close();
 		outFile.close();
@@ -246,39 +259,70 @@ public class Bayes {
 	// Method validates classifier using validation file and displays
 	// error rate
 	public void validate(String validationFile) throws IOException {
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program" + validationFile));
-
-		// read number of records
-		int numberRecords = inFile.nextInt();
-
+//		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program" + validationFile));
+//
+//		// read number of records
+//		int numberRecords = inFile.nextInt();
+//
+//		// initially zero errors
+//		int numberErrors = 0;
+//
+//		// for each record
+//		for (int i = 0; i < numberRecords; i++) {
+//			// create attribute array
+//			int[] attributeArray = new int[numberAttributes];
+//
+//			// read attributes
+//			for (int j = 0; j < numberAttributes; j++)
+//				attributeArray[j] = inFile.nextInt();
+//
+//			// read actual class
+//			int actualClass = inFile.nextInt();
+//
+//			// find class predicted by classifier
+//			int predictedClass = classify(attributeArray);
+//
+//			// error if predicted and actual classes do not match
+//			if (predictedClass != actualClass)
+//				numberErrors += 1;
+//		}
+//
+//		// find and print error rate
+//		double errorRate = 100.0 * numberErrors / numberRecords;
+//		System.out.println("validation error: " + errorRate);
+//
+//		inFile.close();
 		// initially zero errors
 		int numberErrors = 0;
 
-		// for each record
-		for (int i = 0; i < numberRecords; i++) {
-			// create attribute array
-			int[] attributeArray = new int[numberAttributes];
+		for (int i = 0; i < this.records.size(); i++) {
+			int originalNumberRecords = this.numberRecords;
+			ArrayList<Record> original = (ArrayList<Record>) this.records.clone();
 
-			// read attributes
-			for (int j = 0; j < numberAttributes; j++)
-				attributeArray[j] = inFile.nextInt();
+			ArrayList<Record> leaveOneOut = (ArrayList<Record>) original.clone();
+			Record takenOut = leaveOneOut.remove(i);
 
-			// read actual class
-			int actualClass = inFile.nextInt();
+			// System.out.println("Number of records pre minus:" + this.numberRecords);
+			this.numberRecords--;
+			// System.out.println("Number of records after minus:" + this.numberRecords);
 
-			// find class predicted by classifier
-			int predictedClass = classify(attributeArray);
+			this.records = leaveOneOut;
+			int predictedClass = classify(takenOut.attributes);
 
-			// error if predicted and actual classes do not match
-			if (predictedClass != actualClass)
-				numberErrors += 1;
+			if (predictedClass != takenOut.className) {
+				numberErrors++;
+			}
+
+			// Reset the arrayList of records and the number of records back to their
+			// original values
+			this.records = original;
+			this.numberRecords = originalNumberRecords;
 		}
 
 		// find and print error rate
 		double errorRate = 100.0 * numberErrors / numberRecords;
-		System.out.println("validation error: " + errorRate);
-
-		inFile.close();
+		this.ErrorPercent = errorRate;
+		System.out.println("validation error: " + errorRate + "%");
 	}
 
 	/*************************************************************************/

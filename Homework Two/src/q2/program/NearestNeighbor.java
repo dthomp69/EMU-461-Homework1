@@ -158,6 +158,7 @@ public class NearestNeighbor {
 			outFile.println(className);
 		}
 
+		// Print the validation error
 		outFile.println("Validation error: " + this.ErrorPercent + "%");
 
 		inFile.close();

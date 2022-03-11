@@ -30,12 +30,13 @@ public class Q3Runner {
 		// compute probabilities
 		classifier.computeProbability();
 
+		classifier.validate("validationfile");
+
 		// classify data
 		classifier.classifyData("convertedTestFile", "classifiedfile");
 
 		// TODO:Leave one out validation
 		// validate classifier
-		// classifier.validate("validationfile");
 
 		// postprocess files
 		convertClassFile("classifiedfile", "convertedClassifiedFile");
@@ -282,10 +283,37 @@ public class Q3Runner {
 
 		// for each record
 		for (int i = 0; i < numberRecords; i++) {
+			int languages = inFile.nextInt();
+			int convertedLanguages = deConvertLanguages(languages);
+			outFile.print(convertedLanguages + " ");
+
+			int knowledge = inFile.nextInt();
+			String convertedKnowledge = deConvertKnowledge(knowledge);
+			outFile.print(convertedKnowledge + " ");
+
+			int expYears = inFile.nextInt();
+			int convertedExpYears = deConvertExpYears(expYears);
+			outFile.print(convertedExpYears + " ");
+
+			int major = inFile.nextInt();
+			String convertedMajor = deConvertMajor(major);
+			outFile.print(convertedMajor + " ");
+
+			int academicPerformance = inFile.nextInt();
+			String convertedAcademicPerformance = deConvertAcademicPerformance(academicPerformance);
+			outFile.print(convertedAcademicPerformance + " ");
+
 			int number = inFile.nextInt(); // convert class number
 			String className = convertNumberToClass(number);
 			outFile.println(className + " ");
 		}
+
+		// For some reason it won't just let me call outFile.println(inFile.nextLine()),
+		// so I
+		// manually did it like this.
+		outFile.print(inFile.next() + " ");
+		outFile.print(inFile.next() + " ");
+		outFile.println(inFile.next());
 
 		inFile.close();
 		outFile.close();
@@ -464,4 +492,89 @@ public class Q3Runner {
 		}
 		return "Error";
 	}
+
+	/*****************************************************************************/
+
+	private static int deConvertLanguages(int value) {
+		if (value == 1) {
+			return 0;
+		}
+		if (value == 2) {
+			return 1;
+		}
+		if (value == 3) {
+			return 2;
+		}
+		return -1;
+	}
+
+	/*****************************************************************************/
+
+	private static String deConvertKnowledge(int value) {
+		if (value == 1) {
+			return "java";
+		}
+		if (value == 2) {
+			return "no";
+		}
+		return "Error";
+	}
+
+	/*****************************************************************************/
+
+	private static int deConvertExpYears(int value) {
+		if (value == 1) {
+			return 0;
+		}
+		if (value == 2) {
+			return 1;
+		}
+		if (value == 3) {
+			return 2;
+		}
+		return -1;
+	}
+
+	/*****************************************************************************/
+
+	private static String deConvertMajor(int value) {
+		if (value == 1) {
+			return "cs";
+		}
+		if (value == 2) {
+			return "other";
+		}
+		return "Error";
+	}
+
+	/*****************************************************************************/
+
+	private static String deConvertAcademicPerformance(int value) {
+		if (value == 1) {
+			return "A";
+		}
+		if (value == 2) {
+			return "B";
+		}
+		if (value == 3) {
+			return "C";
+		}
+		if (value == 4) {
+			return "D";
+		}
+		return "Error";
+	}
+
+	/*****************************************************************************/
+
+	private static String deConvertClassName(int value) {
+		if (value == 1) {
+			return "interview";
+		}
+		if (value == 2) {
+			return "no";
+		}
+		return "Error";
+	}
+
 }
