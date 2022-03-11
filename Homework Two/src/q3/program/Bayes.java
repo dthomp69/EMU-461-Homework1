@@ -47,13 +47,22 @@ public class Bayes {
 
 	// Method loads data from training file
 	public void loadTrainingData(String trainingFile) throws IOException {
-		Scanner inFile = new Scanner(
-				new File(System.getProperty("user.dir") + "\\src\\mannicamBayes\\" + trainingFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program\\" + trainingFile));
 
 		// read number of records, attributes, classes
 		numberRecords = inFile.nextInt();
 		numberAttributes = inFile.nextInt();
 		numberClasses = inFile.nextInt();
+
+		// Read these lines to skip the excess data at the top
+//		inFile.nextLine();
+//		inFile.nextLine();
+//		inFile.nextLine();
+//		inFile.nextLine();
+//		inFile.nextLine();
+//		inFile.nextLine();
+//		inFile.nextLine();
+//		inFile.nextLine();
 
 		// read number of attribute values
 		attributeValues = new int[numberAttributes];
@@ -202,9 +211,9 @@ public class Bayes {
 	// Method reads test records from test file and writes classified records
 	// to classified file
 	public void classifyData(String testFile, String classifiedFile) throws IOException {
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\mannicamBayes\\" + testFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program\\" + testFile));
 		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\mannicamBayes\\" + classifiedFile));
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\program\\" + classifiedFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
@@ -237,8 +246,7 @@ public class Bayes {
 	// Method validates classifier using validation file and displays
 	// error rate
 	public void validate(String validationFile) throws IOException {
-		Scanner inFile = new Scanner(
-				new File(System.getProperty("user.dir") + "\\src\\mannicamBayes\\" + validationFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program" + validationFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();

@@ -9,36 +9,28 @@ public class BayesTester {
 
 	// Main method
 	public static void main(String[] args) throws IOException {
-		// Gets file names. NO ERROR PREVENTION
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Name of trainingData?");
-		String file1Name = scanner.nextLine();
-		System.out.println("Name of testingData?");
-		String file2Name = scanner.nextLine();
-
 		// preprocess files
-		convertTrainingFile(file1Name, "convertedTrainingFile");
-		// convertValidationFile("originalvalidationfile", "validationfile");
-		convertTestFile(file2Name, "convertedTestFile");
+		convertTrainingFile("originaltrainingfile", "trainingfile");
+		convertValidationFile("originalvalidationfile", "validationfile");
+		convertTestFile("originaltestfile", "testfile");
 
 		// construct bayes classifier
 		Bayes classifier = new Bayes();
 
 		// load training data
-		classifier.loadTrainingData("convertedTrainingfile");
+		classifier.loadTrainingData("trainingfile");
 
 		// compute probabilities
 		classifier.computeProbability();
 
 		// classify data
-		classifier.classifyData("convertedTestFile", "classifiedfile");
+		classifier.classifyData("testfile", "classifiedfile");
 
-		// TODO:Leave one out validation
 		// validate classifier
-		// classifier.validate("validationfile");
+		classifier.validate("validationfile");
 
 		// postprocess files
-		convertClassFile("classifiedfile", "convertedClassifiedFile");
+		convertClassFile("classifiedfile", "originalclassifiedfile");
 	}
 
 	/****************************************************************************/
@@ -46,38 +38,25 @@ public class BayesTester {
 	// Method converts training file to numerical format
 	private static void convertTrainingFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program\\" + inputFile));
-		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\program\\" + outputFile));
+		Scanner inFile = new Scanner(new File(inputFile));
+		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
 
 		// read number of records, attributes, classes
 		int numberRecords = inFile.nextInt();
 		int numberAttributes = inFile.nextInt();
 		int numberClasses = inFile.nextInt();
 
-		// Clear the next 8 lines to avoid reading in info about the data
-		inFile.nextLine();
-		inFile.nextLine();
-		inFile.nextLine();
-		inFile.nextLine();
-		inFile.nextLine();
-		inFile.nextLine();
-		inFile.nextLine();
-		inFile.nextLine();
-
 		// read attribute values
 		int[] attributeValues = new int[numberAttributes];
-		for (int i = 0; i < numberAttributes; i++) {
+		for (int i = 0; i < numberAttributes; i++)
 			attributeValues[i] = inFile.nextInt();
-		}
 
 		// write number of records, attributes, classes
 		outFile.println(numberRecords + " " + numberAttributes + " " + numberClasses);
 
 		// write attribute values
-		for (int i = 0; i < numberAttributes; i++) {
+		for (int i = 0; i < numberAttributes; i++)
 			outFile.print(attributeValues[i] + " ");
-		}
 		outFile.println();
 
 		// for each record
@@ -118,9 +97,8 @@ public class BayesTester {
 	// Method converts validation file to numerical format
 	private static void convertValidationFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program\\" + inputFile));
-		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\program\\" + outputFile));
+		Scanner inFile = new Scanner(new File(inputFile));
+		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
@@ -166,9 +144,8 @@ public class BayesTester {
 	// Method converts test file to numerical format
 	private static void convertTestFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program\\" + inputFile));
-		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\program\\" + outputFile));
+		Scanner inFile = new Scanner(new File(inputFile));
+		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
@@ -210,9 +187,8 @@ public class BayesTester {
 	// Method converts class file to text format
 	private static void convertClassFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program\\" + inputFile));
-		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\program\\" + outputFile));
+		Scanner inFile = new Scanner(new File(inputFile));
+		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();

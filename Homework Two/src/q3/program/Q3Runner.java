@@ -9,28 +9,36 @@ public class Q3Runner {
 
 	// Main method
 	public static void main(String[] args) throws IOException {
+		// Gets file names. NO ERROR PREVENTION
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Name of trainingData?");
+		String file1Name = scanner.nextLine();
+		System.out.println("Name of testingData?");
+		String file2Name = scanner.nextLine();
+
 		// preprocess files
-		convertTrainingFile("originaltrainingfile", "trainingfile");
-		convertValidationFile("originalvalidationfile", "validationfile");
-		convertTestFile("originaltestfile", "testfile");
+		convertTrainingFile(file1Name, "convertedTrainingFile");
+		// convertValidationFile("originalvalidationfile", "validationfile");
+		convertTestFile(file2Name, "convertedTestFile");
 
 		// construct bayes classifier
 		Bayes classifier = new Bayes();
 
 		// load training data
-		classifier.loadTrainingData("trainingfile");
+		classifier.loadTrainingData("convertedTrainingfile");
 
 		// compute probabilities
 		classifier.computeProbability();
 
 		// classify data
-		classifier.classifyData("testfile", "classifiedfile");
+		classifier.classifyData("convertedTestFile", "classifiedfile");
 
+		// TODO:Leave one out validation
 		// validate classifier
-		classifier.validate("validationfile");
+		// classifier.validate("validationfile");
 
 		// postprocess files
-		convertClassFile("classifiedfile", "originalclassifiedfile");
+		convertClassFile("classifiedfile", "convertedClassifiedFile");
 	}
 
 	/****************************************************************************/
@@ -38,53 +46,97 @@ public class Q3Runner {
 	// Method converts training file to numerical format
 	private static void convertTrainingFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\mannicamBayes\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\mannicamBayes\\" + outputFile));
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\program\\" + outputFile));
 
 		// read number of records, attributes, classes
 		int numberRecords = inFile.nextInt();
 		int numberAttributes = inFile.nextInt();
 		int numberClasses = inFile.nextInt();
 
+		// Clear the next 8 lines to avoid reading in info about the data
+		inFile.nextLine();
+		inFile.nextLine();
+		inFile.nextLine();
+		inFile.nextLine();
+		inFile.nextLine();
+		inFile.nextLine();
+		inFile.nextLine();
+		inFile.nextLine();
+
 		// read attribute values
 		int[] attributeValues = new int[numberAttributes];
-		for (int i = 0; i < numberAttributes; i++)
+		for (int i = 0; i < numberAttributes; i++) {
 			attributeValues[i] = inFile.nextInt();
+		}
 
 		// write number of records, attributes, classes
 		outFile.println(numberRecords + " " + numberAttributes + " " + numberClasses);
 
+		// Add another line for spacing
+		outFile.println();
+
 		// write attribute values
-		for (int i = 0; i < numberAttributes; i++)
+		for (int i = 0; i < numberAttributes; i++) {
 			outFile.print(attributeValues[i] + " ");
+		}
+		outFile.println();
+
+		// Print another line for spacing :)
 		outFile.println();
 
 		// for each record
 		for (int i = 0; i < numberRecords; i++) {
-			String degree = inFile.next(); // convert degree
-			int degreeNumber = convertDegreeToNumber(degree);
-			outFile.print(degreeNumber + " ");
+//			String degree = inFile.next(); // convert degree
+//			int degreeNumber = convertDegreeToNumber(degree);
+//			outFile.print(degreeNumber + " ");
+//
+//			String smoke = inFile.next(); // convert smoking status
+//			int smokeNumber = convertSmokeToNumber(smoke);
+//			outFile.print(smokeNumber + " ");
+//
+//			String marital = inFile.next(); // convert marital status
+//			int maritalNumber = convertMaritalToNumber(marital);
+//			outFile.print(maritalNumber + " ");
+//
+//			String sex = inFile.next(); // convert sex
+//			int sexNumber = convertSexToNumber(sex);
+//			outFile.print(sexNumber + " ");
+//
+//			String work = inFile.next(); // convert work
+//			int workNumber = convertWorkToNumber(work);
+//			outFile.print(workNumber + " ");
+//
+//			String className = inFile.next(); // convert class name
+//			int classNumber = convertClassToNumber(className);
+//			outFile.print(classNumber);
+//
+//			outFile.println();
 
-			String smoke = inFile.next(); // convert smoking status
-			int smokeNumber = convertSmokeToNumber(smoke);
-			outFile.print(smokeNumber + " ");
+			int languages = inFile.nextInt();
+			int convertedLanguages = convertLanguages(languages);
+			outFile.print(convertedLanguages + " ");
 
-			String marital = inFile.next(); // convert marital status
-			int maritalNumber = convertMaritalToNumber(marital);
-			outFile.print(maritalNumber + " ");
+			String knowledge = inFile.next();
+			int convertedKnowledge = convertKnowledge(knowledge);
+			outFile.print(convertedKnowledge + " ");
 
-			String sex = inFile.next(); // convert sex
-			int sexNumber = convertSexToNumber(sex);
-			outFile.print(sexNumber + " ");
+			int expYears = inFile.nextInt();
+			int convertedExpYears = convertExpYears(expYears);
+			outFile.print(convertedExpYears + " ");
 
-			String work = inFile.next(); // convert work
-			int workNumber = convertWorkToNumber(work);
-			outFile.print(workNumber + " ");
+			String major = inFile.next();
+			int convertedMajor = convertMajor(major);
+			outFile.print(convertedMajor + " ");
 
-			String className = inFile.next(); // convert class name
-			int classNumber = convertClassToNumber(className);
-			outFile.print(classNumber);
+			String academicPerformance = inFile.next();
+			int convertedAcademicPerformance = convertAcademicPerformance(academicPerformance);
+			outFile.print(convertedAcademicPerformance + " ");
+
+			String className = inFile.next();
+			int convertedClassName = convertClassName(className);
+			outFile.print(convertedClassName + " ");
 
 			outFile.println();
 		}
@@ -96,59 +148,59 @@ public class Q3Runner {
 	/****************************************************************************/
 
 	// Method converts validation file to numerical format
-	private static void convertValidationFile(String inputFile, String outputFile) throws IOException {
-		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\mannicamBayes\\" + inputFile));
-		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\mannicamBayes\\" + outputFile));
-
-		// read number of records
-		int numberRecords = inFile.nextInt();
-
-		// write number of records
-		outFile.println(numberRecords);
-
-		// for each record
-		for (int i = 0; i < numberRecords; i++) {
-			String degree = inFile.next(); // convert degree
-			int degreeNumber = convertDegreeToNumber(degree);
-			outFile.print(degreeNumber + " ");
-
-			String smoke = inFile.next(); // convert smoking status
-			int smokeNumber = convertSmokeToNumber(smoke);
-			outFile.print(smokeNumber + " ");
-
-			String marital = inFile.next(); // convert marital status
-			int maritalNumber = convertMaritalToNumber(marital);
-			outFile.print(maritalNumber + " ");
-
-			String sex = inFile.next(); // convert sex
-			int sexNumber = convertSexToNumber(sex);
-			outFile.print(sexNumber + " ");
-
-			String work = inFile.next(); // convert work
-			int workNumber = convertWorkToNumber(work);
-			outFile.print(workNumber + " ");
-
-			String className = inFile.next(); // convert class name
-			int classNumber = convertClassToNumber(className);
-			outFile.print(classNumber);
-
-			outFile.println();
-		}
-
-		inFile.close();
-		outFile.close();
-	}
+//	private static void convertValidationFile(String inputFile, String outputFile) throws IOException {
+//		// input and output files
+//		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program\\" + inputFile));
+//		PrintWriter outFile = new PrintWriter(
+//				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\program\\" + outputFile));
+//
+//		// read number of records
+//		int numberRecords = inFile.nextInt();
+//
+//		// write number of records
+//		outFile.println(numberRecords);
+//
+//		// for each record
+//		for (int i = 0; i < numberRecords; i++) {
+//			String degree = inFile.next(); // convert degree
+//			int degreeNumber = convertDegreeToNumber(degree);
+//			outFile.print(degreeNumber + " ");
+//
+//			String smoke = inFile.next(); // convert smoking status
+//			int smokeNumber = convertSmokeToNumber(smoke);
+//			outFile.print(smokeNumber + " ");
+//
+//			String marital = inFile.next(); // convert marital status
+//			int maritalNumber = convertMaritalToNumber(marital);
+//			outFile.print(maritalNumber + " ");
+//
+//			String sex = inFile.next(); // convert sex
+//			int sexNumber = convertSexToNumber(sex);
+//			outFile.print(sexNumber + " ");
+//
+//			String work = inFile.next(); // convert work
+//			int workNumber = convertWorkToNumber(work);
+//			outFile.print(workNumber + " ");
+//
+//			String className = inFile.next(); // convert class name
+//			int classNumber = convertClassToNumber(className);
+//			outFile.print(classNumber);
+//
+//			outFile.println();
+//		}
+//
+//		inFile.close();
+//		outFile.close();
+//	}
 
 	/****************************************************************************/
 
 	// Method converts test file to numerical format
 	private static void convertTestFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\mannicamBayes\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\mannicamBayes\\" + outputFile));
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\program\\" + outputFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
@@ -156,27 +208,55 @@ public class Q3Runner {
 		// write number of records
 		outFile.println(numberRecords);
 
+		// Add another line for spacing
+		outFile.println();
+
 		// for each record
 		for (int i = 0; i < numberRecords; i++) {
-			String degree = inFile.next(); // convert degree
-			int degreeNumber = convertDegreeToNumber(degree);
-			outFile.print(degreeNumber + " ");
+//			String degree = inFile.next(); // convert degree
+//			int degreeNumber = convertDegreeToNumber(degree);
+//			outFile.print(degreeNumber + " ");
+//
+//			String smoke = inFile.next(); // convert smoking status
+//			int smokeNumber = convertSmokeToNumber(smoke);
+//			outFile.print(smokeNumber + " ");
+//
+//			String marital = inFile.next(); // convert marital status
+//			int maritalNumber = convertMaritalToNumber(marital);
+//			outFile.print(maritalNumber + " ");
+//
+//			String sex = inFile.next(); // convert sex
+//			int sexNumber = convertSexToNumber(sex);
+//			outFile.print(sexNumber + " ");
+//
+//			String work = inFile.next(); // convert work
+//			int workNumber = convertWorkToNumber(work);
+//			outFile.print(workNumber + " ");
+//
+//			outFile.println();
+			int languages = inFile.nextInt();
+			int convertedLanguages = convertLanguages(languages);
+			outFile.print(convertedLanguages + " ");
 
-			String smoke = inFile.next(); // convert smoking status
-			int smokeNumber = convertSmokeToNumber(smoke);
-			outFile.print(smokeNumber + " ");
+			String knowledge = inFile.next();
+			int convertedKnowledge = convertKnowledge(knowledge);
+			outFile.print(convertedKnowledge + " ");
 
-			String marital = inFile.next(); // convert marital status
-			int maritalNumber = convertMaritalToNumber(marital);
-			outFile.print(maritalNumber + " ");
+			int expYears = inFile.nextInt();
+			int convertedExpYears = convertExpYears(expYears);
+			outFile.print(convertedExpYears + " ");
 
-			String sex = inFile.next(); // convert sex
-			int sexNumber = convertSexToNumber(sex);
-			outFile.print(sexNumber + " ");
+			String major = inFile.next();
+			int convertedMajor = convertMajor(major);
+			outFile.print(convertedMajor + " ");
 
-			String work = inFile.next(); // convert work
-			int workNumber = convertWorkToNumber(work);
-			outFile.print(workNumber + " ");
+			String academicPerformance = inFile.next();
+			int convertedAcademicPerformance = convertAcademicPerformance(academicPerformance);
+			outFile.print(convertedAcademicPerformance + " ");
+
+//			String className = inFile.next();
+//			int convertedClassName = convertClassName(className);
+//			outFile.print(convertedClassName);
 
 			outFile.println();
 		}
@@ -190,9 +270,9 @@ public class Q3Runner {
 	// Method converts class file to text format
 	private static void convertClassFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\mannicamBayes\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\mannicamBayes\\" + outputFile));
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\program\\" + outputFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
@@ -204,7 +284,7 @@ public class Q3Runner {
 		for (int i = 0; i < numberRecords; i++) {
 			int number = inFile.nextInt(); // convert class number
 			String className = convertNumberToClass(number);
-			outFile.println(className);
+			outFile.println(className + " ");
 		}
 
 		inFile.close();
@@ -214,80 +294,174 @@ public class Q3Runner {
 	/****************************************************************************/
 
 	// Method converts degree type to number
-	private static int convertDegreeToNumber(String degree) {
-		if (degree.equals("college"))
-			return 1;
-		else
-			return 2;
-	}
+//	private static int convertDegreeToNumber(String degree) {
+//		if (degree.equals("college"))
+//			return 1;
+//		else
+//			return 2;
+//	}
 
 	/*****************************************************************************/
 
 	// Method converts smoking status to number
-	private static int convertSmokeToNumber(String smoke) {
-		if (smoke.equals("smoker"))
-			return 1;
-		else
-			return 2;
-	}
+//	private static int convertSmokeToNumber(String smoke) {
+//		if (smoke.equals("smoker"))
+//			return 1;
+//		else
+//			return 2;
+//	}
 
 	/****************************************************************************/
 
 	// Method converts marital status to number
-	private static int convertMaritalToNumber(String marital) {
-		if (marital.equals("married"))
-			return 1;
-		else
-			return 2;
-	}
+//	private static int convertMaritalToNumber(String marital) {
+//		if (marital.equals("married"))
+//			return 1;
+//		else
+//			return 2;
+//	}
 
 	/****************************************************************************/
 
 	// Method converts sex to number
-	private static int convertSexToNumber(String sex) {
-		if (sex.equals("male"))
-			return 1;
-		else
-			return 2;
-	}
+//	private static int convertSexToNumber(String sex) {
+//		if (sex.equals("male"))
+//			return 1;
+//		else
+//			return 2;
+//	}
 
 	/****************************************************************************/
 
 	// Method converts work status to number
-	private static int convertWorkToNumber(String work) {
-		if (work.equals("works"))
-			return 1;
-		else
-			return 2;
-	}
+//	private static int convertWorkToNumber(String work) {
+//		if (work.equals("works"))
+//			return 1;
+//		else
+//			return 2;
+//	}
 
 	/****************************************************************************/
 
 	// Method converts class name to number
-	private static int convertClassToNumber(String className) {
-		if (className.equals("lowrisk"))
-			return 1;
-		else if (className.equals("mediumrisk"))
-			return 2;
-		else if (className.equals("highrisk"))
-			return 3;
-		else
-			return 4;
-	}
+//	private static int convertClassToNumber(String className) {
+//		if (className.equals("lowrisk"))
+//			return 1;
+//		else if (className.equals("mediumrisk"))
+//			return 2;
+//		else if (className.equals("highrisk"))
+//			return 3;
+//		else
+//			return 4;
+//	}
 
 	/*****************************************************************************/
 
 	// Method converts number to class name
-	private static String convertNumberToClass(int number) {
-		if (number == 1)
-			return "lowrisk";
-		else if (number == 2)
-			return "mediumrisk";
-		else if (number == 3)
-			return "highrisk";
-		else
-			return "undefined";
+//	private static String convertNumberToClass(int number) {
+//		if (number == 1)
+//			return "lowrisk";
+//		else if (number == 2)
+//			return "mediumrisk";
+//		else if (number == 3)
+//			return "highrisk";
+//		else
+//			return "undefined";
+//	}
+
+	/*****************************************************************************/
+
+	private static int convertLanguages(int value) {
+		if (value == 0) {
+			return 1;
+		}
+		if (value == 1) {
+			return 2;
+		}
+		if (value == 2) {
+			return 3;
+		}
+		return -1;
 	}
 
 	/*****************************************************************************/
+
+	private static int convertKnowledge(String value) {
+		if (value.equals("java") || value.equals("yes")) {
+			return 1;
+		}
+		if (value.equals("no")) {
+			return 2;
+		}
+		return -1;
+	}
+
+	/*****************************************************************************/
+
+	private static int convertExpYears(int value) {
+		if (value == 0) {
+			return 1;
+		}
+		if (value == 1) {
+			return 2;
+		}
+		if (value == 2) {
+			return 3;
+		}
+		return -1;
+	}
+
+	/*****************************************************************************/
+
+	private static int convertMajor(String value) {
+		if (value.equals("cs")) {
+			return 1;
+		}
+		if (value.equals("other")) {
+			return 2;
+		}
+		return -1;
+	}
+
+	/*****************************************************************************/
+
+	private static int convertAcademicPerformance(String value) {
+		if (value.equals("A")) {
+			return 1;
+		}
+		if (value.equals("B")) {
+			return 2;
+		}
+		if (value.equals("C")) {
+			return 3;
+		}
+		if (value.equals("D")) {
+			return 4;
+		}
+		return -1;
+	}
+
+	/*****************************************************************************/
+
+	private static int convertClassName(String value) {
+		if (value.equals("interview")) {
+			return 1;
+		}
+		if (value.equals("no")) {
+			return 2;
+		}
+		return -1;
+	}
+
+	/*****************************************************************************/
+
+	private static String convertNumberToClass(int value) {
+		if (value == 1) {
+			return "interview";
+		}
+		if (value == 2) {
+			return "no";
+		}
+		return "Error";
+	}
 }
