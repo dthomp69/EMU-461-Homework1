@@ -38,12 +38,6 @@ public class Kmeans {
 	public void load(String inputFile) throws IOException {
 		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q4\\output\\" + inputFile));
 
-		// Read these lines to clear the info at the top of the file
-//		inFile.nextLine();
-//		inFile.nextLine();
-//		inFile.nextLine();
-//		inFile.nextLine();
-
 		// read number of records, attributes
 		numberRecords = inFile.nextInt();
 		numberAttributes = inFile.nextInt();

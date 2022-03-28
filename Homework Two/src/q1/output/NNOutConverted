@@ -1,12 +1,13 @@
 10
-800.0 40.0 50.0 Male Divorced low
-820.0 70.0 55.0 Male Single low
-550.0 80.0 47.0 Female Married undetermined
-650.0 60.0 50.0 Male Single high
-630.0 50.0 65.0 Male Married medium
-710.0 60.0 65.0 Female Single high
-670.0 65.0 45.0 Male Single high
-600.0 80.0 75.0 Female Married undetermined
-650.0 55.0 35.0 Male Married medium
-790.0 40.0 30.0 Female Divorced medium
+800 40 50 Male Divorced low
+820 70 55 Male Single low
+550 80 47 Female Married undetermined
+650 60 50 Male Single high
+630 50 65 Male Married medium
+710 60 65 Female Single high
+670 65 45 Male Single high
+600 80 75 Female Married undetermined
+650 55 35 Male Married medium
+790 40 30 Female Divorced medium
 Validation error: 28.75%
+Number of neighbors: 5

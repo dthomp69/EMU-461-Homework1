@@ -1,0 +1,20 @@
+16 5 4
+
+highschool		nonsmoker		notmarried		male		retired		undetermined	
+college			smoker			notmarried		female		retired		lowrisk	
+highschool		smoker			married			male		retired		highrisk
+highschool		nonsmoker		married			female		works		mediumrisk
+college		    smoker			married			female		retired		highrisk	
+highschool		smoker			notmarried		male		works		undetermined	
+highschool		smoker			notmarried		female		works		lowrisk	
+college  		nonsmoker		married			male		works		mediumrisk  
+college			smoker			notmarried		male		retired		undetermined
+highschool		nonsmoker		married			male		retired		mediumrisk  	 
+college			nonsmoker		notmarried		female		works		lowrisk			
+college			smoker			married			male		works		highrisk
+highschool		nonsmoker		notmarried		female		retired		lowrisk		
+highschool		smoker			married			female		works		highrisk
+college			nonsmoker		married			female		retired		mediumrisk	
+college			nonsmoker		notmarried		male		works		undetermined
+	
+

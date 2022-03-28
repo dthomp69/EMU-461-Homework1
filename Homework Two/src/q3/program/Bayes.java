@@ -58,16 +58,6 @@ public class Bayes {
 		numberAttributes = inFile.nextInt();
 		numberClasses = inFile.nextInt();
 
-		// Read these lines to skip the excess data at the top
-//		inFile.nextLine();
-//		inFile.nextLine();
-//		inFile.nextLine();
-//		inFile.nextLine();
-//		inFile.nextLine();
-//		inFile.nextLine();
-//		inFile.nextLine();
-//		inFile.nextLine();
-
 		// read number of attribute values
 		attributeValues = new int[numberAttributes];
 		for (int i = 0; i < numberAttributes; i++)
@@ -259,39 +249,7 @@ public class Bayes {
 	// Method validates classifier using validation file and displays
 	// error rate
 	public void validate(String validationFile) throws IOException {
-//		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program" + validationFile));
-//
-//		// read number of records
-//		int numberRecords = inFile.nextInt();
-//
-//		// initially zero errors
-//		int numberErrors = 0;
-//
-//		// for each record
-//		for (int i = 0; i < numberRecords; i++) {
-//			// create attribute array
-//			int[] attributeArray = new int[numberAttributes];
-//
-//			// read attributes
-//			for (int j = 0; j < numberAttributes; j++)
-//				attributeArray[j] = inFile.nextInt();
-//
-//			// read actual class
-//			int actualClass = inFile.nextInt();
-//
-//			// find class predicted by classifier
-//			int predictedClass = classify(attributeArray);
-//
-//			// error if predicted and actual classes do not match
-//			if (predictedClass != actualClass)
-//				numberErrors += 1;
-//		}
-//
-//		// find and print error rate
-//		double errorRate = 100.0 * numberErrors / numberRecords;
-//		System.out.println("validation error: " + errorRate);
-//
-//		inFile.close();
+
 		// initially zero errors
 		int numberErrors = 0;
 
@@ -302,9 +260,7 @@ public class Bayes {
 			ArrayList<Record> leaveOneOut = (ArrayList<Record>) original.clone();
 			Record takenOut = leaveOneOut.remove(i);
 
-			// System.out.println("Number of records pre minus:" + this.numberRecords);
 			this.numberRecords--;
-			// System.out.println("Number of records after minus:" + this.numberRecords);
 
 			this.records = leaveOneOut;
 			int predictedClass = classify(takenOut.attributes);

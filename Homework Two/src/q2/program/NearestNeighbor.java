@@ -64,16 +64,7 @@ public class NearestNeighbor {
 
 			// read attribute values
 			for (int j = 0; j < numberAttributes; j++) {
-				// Changing scale from [0,1] to [1,2], to see if that fixes an error I'm having
-//				int rawAttribute = inFile.nextInt();
-//				if (rawAttribute == 0) {
-//					attributeArray[j] = 1;
-//				}
-//				if (rawAttribute == 1) {
-//					attributeArray[j] = 2;
-//				}
 
-				// Didn't seem to work, keeping normal
 				attributeArray[j] = inFile.nextInt();
 			}
 
@@ -83,25 +74,10 @@ public class NearestNeighbor {
 			// create record
 			Record record = new Record(attributeArray, className);
 
-//			if (className == 1) {
-//				Record record = new Record(attributeArray, 2);
-//				records.add(record);
-//			} else {
-//				Record record = new Record(attributeArray, 1);
-//				records.add(record);
-//			}
-
 			// add record to list of records
 			records.add(record);
 
 		}
-
-//		System.out.println("Data initialized in loadTrainingData");
-//		System.out.println("Number of records:" + numberRecords);
-//		System.out.println("Number of attributes:" + numberAttributes);
-//		System.out.println("Number of classes:" + numberClasses);
-//
-//		System.out.println("Real number of records:" + records.size());
 
 		inFile.close();
 	}
@@ -142,15 +118,7 @@ public class NearestNeighbor {
 
 			// Write other attributes
 			for (int j = 0; j < attributeArray.length; j++) {
-//				if (j == 0) {
-//					outFile.print((int) attributeArray[j] + " ");
-//				} else {
-//					if (j % 16 == 0) {
-//						outFile.println((int) attributeArray[j] + " ");
-//					} else {
-//						outFile.print((int) attributeArray[j] + " ");
-//					}
-//				}
+
 				outFile.print(attributeArray[j] + " ");
 			}
 
@@ -245,44 +213,7 @@ public class NearestNeighbor {
 
 	/*************************************************************************/
 
-	// Method validates classifier using validation file and displays error rate
-//	public void validate(String validationFile) throws IOException {
-//		Scanner inFile = new Scanner(
-//				new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + validationFile));
-//
-//		// read number of records
-//		int numberRecords = inFile.nextInt();
-//
-//		// initially zero errors
-//		int numberErrors = 0;
-//
-//		// for each record
-//		for (int i = 0; i < numberRecords; i++) {
-//			double[] attributeArray = new double[numberAttributes];
-//
-//			// read attributes
-//			for (int j = 0; j < numberAttributes; j++)
-//				attributeArray[j] = inFile.nextDouble();
-//
-//			// read actual class
-//			int actualClass = inFile.nextInt();
-//
-//			// find class predicted by classifier
-//			int predictedClass = classify(attributeArray);
-//
-//			// errror if predicted and actual classes do not match
-//			if (predictedClass != actualClass)
-//				numberErrors += 1;
-//		}
-//
-//		// find and print error rate
-//		double errorRate = 100.0 * numberErrors / numberRecords;
-//		System.out.println("validation error: " + errorRate + "%");
-//
-//		inFile.close();
-//	}
-
-	// Chang(ed/ing) to implement leave one out
+	// Changed to implement leave one out
 	public void validate(String validationFile) throws IOException {
 		// initially zero errors
 		int numberErrors = 0;

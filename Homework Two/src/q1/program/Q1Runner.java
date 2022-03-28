@@ -21,20 +21,9 @@ public class Q1Runner {
 		String file1Name = scanner.nextLine();
 		System.out.println("Name of testingData?");
 		String file2Name = scanner.nextLine();
-//		System.out.println(file1Name);
-//		System.out.println(file2Name);
 
 		// preprocess files
-		// TODO: Make user specified input files
 		convertTrainingFile(file1Name, "convertedFile1");
-
-		// TODO: make leave one out validation
-		/*
-		 * Pretty sure that since there's no validation file, validation is done
-		 * entirely inside of the nearestNeighbor algorithm. Commenting out related code
-		 * inside of this class
-		 */
-//		convertValidationFile("originalvalidationfile", "validationfile");
 
 		convertTestFile(file2Name, "convertedFile2");
 
@@ -47,12 +36,7 @@ public class Q1Runner {
 		// set nearest neighbors
 		classifier.setParameters(NEIGHBORS);
 
-		// validate classfier
-//		classifier.validate("validationfile");
-
-		// TODO: make the below method call actually work, since that's what leave one
-		// out will be.
-//		classifier.validate();
+		// Runs leave one out on the data.
 		classifier.validate("convertedFile1");
 
 		// classify test data
@@ -81,35 +65,6 @@ public class Q1Runner {
 
 		// for each record
 		for (int i = 0; i < numberRecords; i++) {
-//			String grade = inFile.next(); // convert grade
-//			double gradeNumber = convertGradeToNumber(grade);
-//			outFile.print(gradeNumber + " ");
-//
-//			double gpa = inFile.nextDouble(); // convert gpa
-//			double gpaNumber = convertGPA(gpa);
-//			outFile.print(gpaNumber + " ");
-//
-//			String className = inFile.next(); // convert class name
-//			int classNumber = convertClassToNumber(className);
-//			outFile.println(classNumber);
-
-			// Normalize Data
-//			int creditScore = inFile.nextInt();
-//			outFile.print(creditScore + " ");
-//
-//			int income = inFile.nextInt();
-//			outFile.print(income + " ");
-//
-//			int age = inFile.nextInt();
-//			outFile.print(age + " ");
-//
-//			String gender = inFile.next();
-//			int genderConverted = convertGender(gender);
-//			outFile.print(genderConverted + " ");
-//
-//			String maritalStatus = inFile.next();
-//			int maritalStatusConverted = convertMaritalStatus(maritalStatus);
-//			outFile.print(maritalStatusConverted + " ");
 
 			int creditScore = inFile.nextInt();
 			double creditScoreNormalized = normalizeCreditScore(creditScore);
@@ -143,39 +98,6 @@ public class Q1Runner {
 
 	/*************************************************************************/
 
-	// Method converts validation file to numerical format
-//	private static void convertValidationFile(String inputFile, String outputFile) throws IOException {
-//		// input and output files
-//		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
-//		PrintWriter outFile = new PrintWriter(new FileWriter(outputFile));
-//
-//		// read number of records
-//		int numberRecords = inFile.nextInt();
-//
-//		// write number of records
-//		outFile.println(numberRecords);
-//
-//		// for each record
-//		for (int i = 0; i < numberRecords; i++) {
-//			String grade = inFile.next(); // convert grade
-//			double gradeNumber = convertGradeToNumber(grade);
-//			outFile.print(gradeNumber + " ");
-//
-//			double gpa = inFile.nextDouble(); // convert gpa
-//			double gpaNumber = convertGPA(gpa);
-//			outFile.print(gpaNumber + " ");
-//
-//			String className = inFile.next(); // convert class name
-//			int classNumber = convertClassToNumber(className);
-//			outFile.println(classNumber);
-//		}
-//
-//		inFile.close();
-//		outFile.close();
-//	}
-
-	/*************************************************************************/
-
 	// Method converts test file to numerical format
 	private static void convertTestFile(String inputFile, String outputFile) throws IOException {
 		// input and output files
@@ -189,17 +111,7 @@ public class Q1Runner {
 		// write number of records
 		outFile.println(numberRecords);
 
-		// TODO: How do I know when to stop if there's no number of records at the top?
-		// for each record
-//		for (int i = 0; i < numberRecords; i++) {
 		while (inFile.hasNext()) {
-//			String grade = inFile.next(); // convert grade
-//			double gradeNumber = convertGradeToNumber(grade);
-//			outFile.print(gradeNumber + " ");
-//
-//			double gpa = inFile.nextDouble(); // convert gpa
-//			double gpaNumber = convertGPA(gpa);
-//			outFile.println(gpaNumber + " ");
 
 			// Normalize data
 			int creditScore = inFile.nextInt();
@@ -224,11 +136,6 @@ public class Q1Runner {
 			outFile.print(normalizedMaritalStatus + " ");
 
 			outFile.println();
-
-			// No class to normalize
-//			String className = inFile.next();
-//			int convertedClass = convertClass(className);
-//			outFile.println(convertedClass);
 		}
 
 		inFile.close();
@@ -255,15 +162,15 @@ public class Q1Runner {
 			/*********************************/
 			double creditScore = inFile.nextDouble();
 			double creditScoreDenormalized = deNormalizeCreditScore(creditScore);
-			outFile.print(creditScoreDenormalized + " ");
+			outFile.print((int) creditScoreDenormalized + " ");
 
 			double income = inFile.nextDouble();
 			double incomeDenormalized = deNormalizeIncome(income);
-			outFile.print(incomeDenormalized + " ");
+			outFile.print((int) incomeDenormalized + " ");
 
 			double age = inFile.nextDouble();
 			double ageDenormalized = deNormalizeAge(age);
-			outFile.print(ageDenormalized + " ");
+			outFile.print((int) ageDenormalized + " ");
 
 			double gender = inFile.nextDouble();
 			String genderConverted = deNormalizeGender(gender);
@@ -271,7 +178,7 @@ public class Q1Runner {
 
 			double maritalStatus = inFile.nextDouble();
 			double maritalStatusConverted = deNormalizeMaritalStatus(maritalStatus);
-			String deConvertMaritalStatus = deConvertMaritalStatus(maritalStatusConverted);
+			String deConvertMaritalStatus = deConvertMaritalStatus((int) maritalStatusConverted);
 			outFile.print(deConvertMaritalStatus + " ");
 			/******************************/
 
@@ -287,47 +194,16 @@ public class Q1Runner {
 		outFile.print(inFile.next() + " ");
 		outFile.println(inFile.next());
 
+		outFile.println("Number of neighbors: " + NEIGHBORS);
+
 		inFile.close();
 		outFile.close();
 	}
 
 	/****************************************************************************/
 
-	// Method converts grade to number
-	private static double convertGradeToNumber(String grade) {
-		if (grade.equals("A"))
-			return 1.0;
-		else if (grade.equals("B"))
-			return 0.5;
-		else
-			return 0.0;
-	}
-
-	/****************************************************************************/
-
-	// Method normalizes gpa
-	private static double convertGPA(double gpa) {
-		return gpa / 4;
-	}
-
-	/****************************************************************************/
-
-	// Method converts class name to number
-	private static int convertClassToNumber(String className) {
-		if (className.equals("good"))
-			return 1;
-		else
-			return 2;
-	}
-
-	/****************************************************************************/
-
 	// Method converts number to class name
 	private static String convertNumberToClass(int number) {
-//		if (number == 1)
-//			return "good";
-//		else
-//			return "bad";
 		if (number == 1) {
 			return "undetermined";
 		}

@@ -208,44 +208,7 @@ public class NearestNeighbor {
 
 	/*************************************************************************/
 
-	// Method validates classifier using validation file and displays error rate
-//	public void validate(String validationFile) throws IOException {
-//		Scanner inFile = new Scanner(
-//				new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + validationFile));
-//
-//		// read number of records
-//		int numberRecords = inFile.nextInt();
-//
-//		// initially zero errors
-//		int numberErrors = 0;
-//
-//		// for each record
-//		for (int i = 0; i < numberRecords; i++) {
-//			double[] attributeArray = new double[numberAttributes];
-//
-//			// read attributes
-//			for (int j = 0; j < numberAttributes; j++)
-//				attributeArray[j] = inFile.nextDouble();
-//
-//			// read actual class
-//			int actualClass = inFile.nextInt();
-//
-//			// find class predicted by classifier
-//			int predictedClass = classify(attributeArray);
-//
-//			// errror if predicted and actual classes do not match
-//			if (predictedClass != actualClass)
-//				numberErrors += 1;
-//		}
-//
-//		// find and print error rate
-//		double errorRate = 100.0 * numberErrors / numberRecords;
-//		System.out.println("validation error: " + errorRate + "%");
-//
-//		inFile.close();
-//	}
-
-	// Chang(ed/ing) to implement leave one out
+	// Changed to implement leave one out
 	public void validate(String validationFile) throws IOException {
 		// initially zero errors
 		int numberErrors = 0;

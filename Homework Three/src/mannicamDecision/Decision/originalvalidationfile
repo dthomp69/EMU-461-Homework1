@@ -1,0 +1,6 @@
+4
+
+college		    smoker			married			female		retired		highrisk
+college		    nonsmoker       notmarried	    male	    retired	    undetermined
+highschool      nonsmoker       notmarried      female      works       lowrisk
+college         nonsmoker       married         male        retired     mediumrisk
