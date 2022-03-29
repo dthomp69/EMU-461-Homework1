@@ -1,6 +1,7 @@
 package q2.program;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 //Program tests neural network in a specific application
@@ -13,7 +14,7 @@ public class Q2Runner {
 
 	public static int numberOfNodes = 5;
 	public static int numberOfIterations = 10000;
-	public static double learningRate = 0.75;
+	public static double learningRate = 0.25;
 	public static int randomSeed = 4001;
 
 	// Main method
@@ -61,7 +62,7 @@ public class Q2Runner {
 
 		// DeNormalize Output File
 
-		// deNormalizeOutput("normalizedOutputfile");
+		deNormalizeOutput("normalizedOutputfile");
 	}
 
 	/****************************************************************/
@@ -198,9 +199,7 @@ public class Q2Runner {
 				new FileWriter(System.getProperty("user.dir") + "\\src\\q2\\output\\" + "outputFile"));
 
 		while (inFile.hasNext()) {
-//			double original = inFile.nextDouble();
-//			double deNormalized = Q1DeNormalize(original);
-//			outFile.println(deNormalized);
+			outFile.println(deNormalizeClass(inFile.nextDouble()));
 		}
 
 		outFile.println();
@@ -313,16 +312,38 @@ public class Q2Runner {
 	}
 
 	public static String deNormalizeClass(double y) {
-		if (y == 0.0) {
+		double checkUndetermined = Math.abs(.75 - y);
+		double checkHigh = Math.abs(.50 - y);
+		double checkMedium = Math.abs(.25 - y);
+		double checkLow = Math.abs(0.0 - y);
+
+		ArrayList<Double> values = new ArrayList<Double>();
+
+		values.add(checkLow);
+		values.add(checkMedium);
+		values.add(checkHigh);
+		values.add(checkUndetermined);
+
+		int lowestIndex = -1;
+		double lowestValue = 100.0;
+
+		for (int i = 0; i < 4; i++) {
+			if (values.get(i) < lowestValue) {
+				lowestIndex = i;
+				lowestValue = values.get(i);
+			}
+		}
+
+		if (lowestIndex == 0) {
 			return "low";
 		}
-		if (y == 0.25) {
+		if (lowestIndex == 1) {
 			return "medium";
 		}
-		if (y == 0.5) {
+		if (lowestIndex == 2) {
 			return "high";
 		}
-		if (y == 0.75) {
+		if (lowestIndex == 3) {
 			return "undetermined";
 		}
 		return "error";

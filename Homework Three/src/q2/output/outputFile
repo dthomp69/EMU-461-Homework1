@@ -1,0 +1,14 @@
+low
+medium
+high
+high
+medium
+high
+low
+high
+
+Average error: 0.11781152681321932
+Number of nodes: 5
+Number of iterations: 10000
+Learning rate: 0.25
+Random seed: 4001
