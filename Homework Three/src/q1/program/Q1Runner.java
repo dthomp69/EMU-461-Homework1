@@ -9,6 +9,13 @@ public class Q1Runner {
 	public static int numberOfInputs;
 	public static int numberOfOutputs;
 
+	public static double validationError;
+
+	public static int numberOfNodes = 3;
+	public static int numberOfIterations = 1000;
+	public static double learningRate = 0.5;
+	public static int randomSeed = 4001;
+
 	// Main method
 	public static void main(String[] args) throws IOException {
 		Scanner scanner = new Scanner(System.in);
@@ -32,7 +39,7 @@ public class Q1Runner {
 		network.loadTrainingData("normalizedTrainingFile");
 
 		// set parameters of network
-		network.setParameters(3, 1000, 0.5, 2375);
+		network.setParameters(numberOfNodes, numberOfIterations, learningRate, randomSeed);
 
 		// train network
 		network.train();
@@ -44,16 +51,17 @@ public class Q1Runner {
 		// test network
 		network.testData("normalizedInputFile", "normalizedOutputfile");
 
-		// DeNormalize Output File
-
-		deNormalizeOutput("normalizedOutputfile");
-
 		// Normalize validation file
 
 		normalizeValidationFile(validationFileName);
 
 		// validate network
 		network.validate("normalizedValidationFile");
+		validationError = network.getValidationError();
+
+		// DeNormalize Output File
+
+		deNormalizeOutput("normalizedOutputfile");
 	}
 
 	/****************************************************************/
@@ -151,6 +159,16 @@ public class Q1Runner {
 			double deNormalized = Q1DeNormalize(original);
 			outFile.println(deNormalized);
 		}
+
+		outFile.println();
+
+		outFile.print("Average error: ");
+		outFile.println(validationError);
+		outFile.println("Number of nodes: " + numberOfNodes);
+		outFile.println("Number of iterations: " + numberOfIterations);
+		outFile.println("Learning rate: " + learningRate);
+		outFile.println("Random seed: " + randomSeed);
+
 		inFile.close();
 		outFile.close();
 	}

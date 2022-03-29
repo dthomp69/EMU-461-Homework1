@@ -44,6 +44,9 @@ public class NeuralNetwork {
 	private double[][] matrixMiddle; // weights between input/hidden nodes
 	private double[][] matrixOut; // weights between hidden/output nodes
 
+	// Validation error:
+	private double validationError;
+
 	/*************************************************************************/
 
 	// Constructor of neural network
@@ -67,6 +70,8 @@ public class NeuralNetwork {
 		thetaOut = null;
 		matrixMiddle = null;
 		matrixOut = null;
+
+		this.validationError = 0.0;
 	}
 
 	/*************************************************************************/
@@ -327,8 +332,10 @@ public class NeuralNetwork {
 			sumError += computeError(actualOutput, predictedOutput);
 		}
 
+		this.validationError = sumError / numberRecords;
+
 		// display average error
-		System.out.println("Average error: " + sumError / numberRecords);
+		System.out.println("Average error: " + this.validationError);
 
 		inFile.close();
 	}
@@ -348,4 +355,8 @@ public class NeuralNetwork {
 	}
 
 	/*************************************************************************/
+
+	public double getValidationError() {
+		return this.validationError;
+	}
 }
