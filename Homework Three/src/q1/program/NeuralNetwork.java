@@ -73,7 +73,7 @@ public class NeuralNetwork {
 
 	// Method loads training records from training file
 	public void loadTrainingData(String trainingFile) throws IOException {
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + trainingFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\output\\" + trainingFile));
 
 		// read number of records, inputs, outputs
 		numberRecords = inFile.nextInt();
@@ -257,7 +257,7 @@ public class NeuralNetwork {
 	// Method reads inputs from input file, computes outputs, and writes outputs
 	// to output file
 	public void testData(String inputFile, String outputFile) throws IOException {
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\output\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(
 				new FileWriter(System.getProperty("user.dir") + "\\src\\q1\\output\\" + outputFile));
 
@@ -289,8 +289,7 @@ public class NeuralNetwork {
 
 	// Method validates the network using the data from a file
 	public void validate(String validationFile) throws IOException {
-		Scanner inFile = new Scanner(
-				new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + validationFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\output\\" + validationFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
