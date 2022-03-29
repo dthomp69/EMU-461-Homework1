@@ -164,7 +164,9 @@ public class Q1Runner {
 
 		// Remember to de-normalize the average error value.
 		outFile.print("Average error: ");
-		outFile.println(Q1DeNormalize(validationError));
+		// TODO: Ask in class if we need to DeNormalize
+//		outFile.println(Q1DeNormalize(validationError));
+		outFile.println(validationError);
 		outFile.println("Number of nodes: " + numberOfNodes);
 		outFile.println("Number of iterations: " + numberOfIterations);
 		outFile.println("Learning rate: " + learningRate);
