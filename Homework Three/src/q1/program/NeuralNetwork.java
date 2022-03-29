@@ -1,4 +1,4 @@
-package mannicamNeural;
+package q1.program;
 
 import java.io.*;
 import java.util.*;
@@ -73,8 +73,7 @@ public class NeuralNetwork {
 
 	// Method loads training records from training file
 	public void loadTrainingData(String trainingFile) throws IOException {
-		Scanner inFile = new Scanner(
-				new File(System.getProperty("user.dir") + "\\src\\mannicamNeural\\Neural\\" + trainingFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + trainingFile));
 
 		// read number of records, inputs, outputs
 		numberRecords = inFile.nextInt();
@@ -258,10 +257,9 @@ public class NeuralNetwork {
 	// Method reads inputs from input file, computes outputs, and writes outputs
 	// to output file
 	public void testData(String inputFile, String outputFile) throws IOException {
-		Scanner inFile = new Scanner(
-				new File(System.getProperty("user.dir") + "\\src\\mannicamNeural\\Neural\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(
-				new FileWriter(System.getProperty("user.dir") + "\\src\\mannicamNeural\\Neural\\" + outputFile));
+				new FileWriter(System.getProperty("user.dir") + "\\src\\q1\\output\\" + outputFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
@@ -292,7 +290,7 @@ public class NeuralNetwork {
 	// Method validates the network using the data from a file
 	public void validate(String validationFile) throws IOException {
 		Scanner inFile = new Scanner(
-				new File(System.getProperty("user.dir") + "\\src\\mannicamNeural\\Neural\\" + validationFile));
+				new File(System.getProperty("user.dir") + "\\src\\q1\\program\\" + validationFile));
 
 		// read number of records
 		int numberRecords = inFile.nextInt();
@@ -331,7 +329,7 @@ public class NeuralNetwork {
 		}
 
 		// display average error
-		System.out.println(sumError / numberRecords);
+		System.out.println("Average error: " + sumError / numberRecords);
 
 		inFile.close();
 	}
