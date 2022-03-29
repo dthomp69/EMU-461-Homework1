@@ -62,7 +62,7 @@ public class Q2Runner {
 
 		// DeNormalize Output File
 
-		deNormalizeOutput("normalizedOutputfile");
+		deNormalizeOutput("normalizedOutputfile", inputFileName);
 	}
 
 	/****************************************************************/
@@ -193,13 +193,20 @@ public class Q2Runner {
 
 	/****************************************************************/
 
-	public static void deNormalizeOutput(String fileName) throws IOException {
+	public static void deNormalizeOutput(String fileName, String inputFileName) throws IOException {
 		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q2\\output\\" + fileName));
+		Scanner originalInputFile = new Scanner(
+				new File(System.getProperty("user.dir") + "\\src\\q2\\program\\" + inputFileName));
 		PrintWriter outFile = new PrintWriter(
 				new FileWriter(System.getProperty("user.dir") + "\\src\\q2\\output\\" + "outputFile"));
 
+		// Clear the top of the input file
+		originalInputFile.nextLine();
+		originalInputFile.nextLine();
+
 		while (inFile.hasNext()) {
-			outFile.println(deNormalizeClass(inFile.nextDouble()));
+			outFile.print(originalInputFile.nextLine());
+			outFile.println("   " + deNormalizeClass(inFile.nextDouble()));
 		}
 
 		outFile.println();
@@ -214,6 +221,7 @@ public class Q2Runner {
 		outFile.println("Learning rate: " + learningRate);
 		outFile.println("Random seed: " + randomSeed);
 
+		originalInputFile.close();
 		inFile.close();
 		outFile.close();
 	}
