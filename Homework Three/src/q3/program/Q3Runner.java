@@ -12,9 +12,9 @@ public class Q3Runner {
 
 	public static double validationError;
 
-	public static int numberOfNodes = 5;
-	public static int numberOfIterations = 10000;
-	public static double learningRate = 0.25;
+	public static int numberOfNodes = 6;
+	public static int numberOfIterations = 700000;
+	public static double learningRate = 0.07;
 	public static int randomSeed = 4001;
 
 	// Main method
@@ -47,10 +47,10 @@ public class Q3Runner {
 
 		// Normalize input file
 
-		normalizeInputFile(inputFileName);
+		// normalizeInputFile(inputFileName);
 
 		// test network
-		network.testData("normalizedInputFile", "normalizedOutputfile");
+		network.testData(inputFileName, "normalizedOutputfile");
 
 		// Normalize validation file
 
@@ -80,33 +80,25 @@ public class Q3Runner {
 
 		outFile.println(numberRecords + " " + numberInputs + " " + numberOutputs);
 
+		// Bonus line for spacing
+		outFile.println();
+
 		for (int i = 0; i < numberRecords; i++) {
-			int originalCreditScore = inFile.nextInt();
-			double normalizedCreditScore = normalizeCreditScore(originalCreditScore);
-			outFile.print(normalizedCreditScore + " ");
+			for (int j = 1; j <= numberInputs; j++) {
+				if (j % 16 == 0 && j != 0) {
+					outFile.println(inFile.nextInt() + " ");
+				} else {
+					outFile.print(inFile.nextInt() + " ");
+				}
+			}
+			int rawClass = inFile.nextInt();
+			double normalizedClass = normalizeClass(rawClass);
+			outFile.println(normalizedClass);
 
-			int originalIncome = inFile.nextInt();
-			double normalizedIncome = normalizeIncome(originalIncome);
-			outFile.print(normalizedIncome + " ");
-
-			int originalAge = inFile.nextInt();
-			double normalizedAge = normalizeAge(originalAge);
-			outFile.print(normalizedAge + " ");
-
-			String originalSex = inFile.next();
-			double normalizedSex = normalizeSex(originalSex);
-			outFile.print(normalizedSex + " ");
-
-			String originalMStatus = inFile.next();
-			double normalizedMStatus = normalizeMStatus(originalMStatus);
-			outFile.print(normalizedMStatus + " ");
-
-			String originalClass = inFile.next();
-			double normalizedClass = normalizeClass(originalClass);
-			outFile.print(normalizedClass + " ");
-
+			// Bonus line for looks
 			outFile.println();
 		}
+
 		inFile.close();
 		outFile.close();
 	}
@@ -123,27 +115,7 @@ public class Q3Runner {
 		outFile.println(numberRecords);
 
 		for (int i = 0; i < numberRecords; i++) {
-			int originalCreditScore = inFile.nextInt();
-			double normalizedCreditScore = normalizeCreditScore(originalCreditScore);
-			outFile.print(normalizedCreditScore + " ");
 
-			int originalIncome = inFile.nextInt();
-			double normalizedIncome = normalizeIncome(originalIncome);
-			outFile.print(normalizedIncome + " ");
-
-			int originalAge = inFile.nextInt();
-			double normalizedAge = normalizeAge(originalAge);
-			outFile.print(normalizedAge + " ");
-
-			String originalSex = inFile.next();
-			double normalizedSex = normalizeSex(originalSex);
-			outFile.print(normalizedSex + " ");
-
-			String originalMStatus = inFile.next();
-			double normalizedMStatus = normalizeMStatus(originalMStatus);
-			outFile.print(normalizedMStatus + " ");
-
-			outFile.println();
 		}
 		inFile.close();
 		outFile.close();
@@ -161,30 +133,18 @@ public class Q3Runner {
 		outFile.println(numberRecords);
 
 		for (int i = 0; i < numberRecords; i++) {
-			int originalCreditScore = inFile.nextInt();
-			double normalizedCreditScore = normalizeCreditScore(originalCreditScore);
-			outFile.print(normalizedCreditScore + " ");
+			for (int j = 1; j <= numberOfInputs; j++) {
+				if (j % 16 == 0 && j != 0) {
+					outFile.println(inFile.nextInt() + " ");
+				} else {
+					outFile.print(inFile.nextInt() + " ");
+				}
+			}
+			int rawClass = inFile.nextInt();
+			double normalizedClass = normalizeClass(rawClass);
+			outFile.println(normalizedClass);
 
-			int originalIncome = inFile.nextInt();
-			double normalizedIncome = normalizeIncome(originalIncome);
-			outFile.print(normalizedIncome + " ");
-
-			int originalAge = inFile.nextInt();
-			double normalizedAge = normalizeAge(originalAge);
-			outFile.print(normalizedAge + " ");
-
-			String originalSex = inFile.next();
-			double normalizedSex = normalizeSex(originalSex);
-			outFile.print(normalizedSex + " ");
-
-			String originalMStatus = inFile.next();
-			double normalizedMStatus = normalizeMStatus(originalMStatus);
-			outFile.print(normalizedMStatus + " ");
-
-			String originalClass = inFile.next();
-			double normalizedClass = normalizeClass(originalClass);
-			outFile.print(normalizedClass + " ");
-
+			// Bonus line for looks
 			outFile.println();
 		}
 		inFile.close();
@@ -200,15 +160,27 @@ public class Q3Runner {
 		PrintWriter outFile = new PrintWriter(
 				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\output\\" + "outputFile"));
 
-		// Clear the top of the input file
-		originalInputFile.nextLine();
+//		while (inFile.hasNext()) {
+//			outFile.print(originalInputFile.nextLine());
+//			outFile.println("   " + deNormalizeClass(inFile.nextDouble()));
+//		}
+		int numberOfRecords = originalInputFile.nextInt();
 		originalInputFile.nextLine();
 
-		while (inFile.hasNext()) {
-			outFile.print(originalInputFile.nextLine());
-			outFile.println("   " + deNormalizeClass(inFile.nextDouble()));
+		outFile.println(numberOfRecords);
+
+		// For each of the records in the input file, copy the next 16 lines from the
+		// input file
+		for (int i = 0; i < numberOfRecords; i++) {
+			for (int j = 0; j < 16; j++) {
+				outFile.println(originalInputFile.nextLine());
+			}
+
+			outFile.println(deNormalizeClass(inFile.nextDouble()));
+
+			// Clear the gap line
+			originalInputFile.nextLine();
 		}
-
 		outFile.println();
 
 		// Remember to de-normalize the average error value.
@@ -227,39 +199,34 @@ public class Q3Runner {
 	}
 
 	/****************************************************************/
-	public static double normalizeClass(String input) {
-		if (input.equals("low")) {
+	public static double normalizeClass(int input) {
+		if (input == 0) {
 			return 0.0;
 		}
-		if (input.equals("medium")) {
-			return 0.25;
-		}
-		if (input.equals("high")) {
+		if (input == 1) {
 			return 0.5;
 		}
-		if (input.equals("undetermined")) {
-			return 0.75;
+		if (input == 2) {
+			return 1.0;
 		}
 		return -1.0;
 	}
 
-	public static String deNormalizeClass(double y) {
-		double checkUndetermined = Math.abs(.75 - y);
-		double checkHigh = Math.abs(.50 - y);
-		double checkMedium = Math.abs(.25 - y);
-		double checkLow = Math.abs(0.0 - y);
+	public static int deNormalizeClass(double y) {
+		double checkTwo = Math.abs(1.0 - y);
+		double checkOne = Math.abs(0.5 - y);
+		double checkZero = Math.abs(0.0 - y);
 
 		ArrayList<Double> values = new ArrayList<Double>();
 
-		values.add(checkLow);
-		values.add(checkMedium);
-		values.add(checkHigh);
-		values.add(checkUndetermined);
+		values.add(checkZero);
+		values.add(checkOne);
+		values.add(checkTwo);
 
 		int lowestIndex = -1;
 		double lowestValue = 100.0;
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 3; i++) {
 			if (values.get(i) < lowestValue) {
 				lowestIndex = i;
 				lowestValue = values.get(i);
@@ -267,18 +234,16 @@ public class Q3Runner {
 		}
 
 		if (lowestIndex == 0) {
-			return "low";
+			return 0;
 		}
 		if (lowestIndex == 1) {
-			return "medium";
+			return 1;
 		}
 		if (lowestIndex == 2) {
-			return "high";
+			return 2;
 		}
-		if (lowestIndex == 3) {
-			return "undetermined";
-		}
-		return "error";
+
+		return -1;
 	}
 
 }

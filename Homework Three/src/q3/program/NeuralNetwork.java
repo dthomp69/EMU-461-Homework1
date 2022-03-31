@@ -262,7 +262,7 @@ public class NeuralNetwork {
 	// Method reads inputs from input file, computes outputs, and writes outputs
 	// to output file
 	public void testData(String inputFile, String outputFile) throws IOException {
-		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\output\\" + inputFile));
+		Scanner inFile = new Scanner(new File(System.getProperty("user.dir") + "\\src\\q3\\program\\" + inputFile));
 		PrintWriter outFile = new PrintWriter(
 				new FileWriter(System.getProperty("user.dir") + "\\src\\q3\\output\\" + outputFile));
 
