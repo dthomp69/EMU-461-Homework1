@@ -11,9 +11,9 @@ public class Q1Runner {
 
 	public static double validationError;
 
-	public static int numberOfNodes = 3;
+	public static int numberOfNodes = 4;
 	public static int numberOfIterations = 1000;
-	public static double learningRate = 0.5;
+	public static double learningRate = 0.7;
 	public static int randomSeed = 4001;
 
 	// Main method

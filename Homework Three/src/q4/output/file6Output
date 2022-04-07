@@ -33,4 +33,9 @@
 Sum buying price: 1497
 Sum value: 1881
 
-600, 50, 1000, 0.2, 0.7, 3000
+Population Size: 600
+String Length: 50
+Number Iterations: 1000
+Crossover Rate: 0.2
+Mutation Rate: 0.7 
+Seed: 3000

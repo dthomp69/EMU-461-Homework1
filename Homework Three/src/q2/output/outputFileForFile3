@@ -4,7 +4,7 @@
 540 66 43 male single   high
 720 40 65 female single   medium
 580 64 52 male married   high
-800 35 45 female divorced   medium
+800 25 45 female divorced   low
 620 32 69 male divorced   high
 
 Average error: 0.11781152681321932

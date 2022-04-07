@@ -332,7 +332,9 @@ public class NeuralNetwork {
 			sumError += computeError(actualOutput, predictedOutput);
 		}
 
-		this.validationError = sumError / numberRecords;
+		//this.validationError = sumError / numberRecords;
+		this.validationError = sumError;
+
 
 		// display average error
 		System.out.println("Average error (normalized here): " + this.validationError);
