@@ -41,7 +41,7 @@ public class Q4Runner {
 		 * inputs are: int populationSize, int stringLength, int numberIterations,
 		 * double crossoverRate, double mutationRate, int seed
 		 */
-		k.setParameters(100, numberItems, 10000, 0.4, 0.2, 4242);
+		k.setParameters(600, numberItems, 1000, 0.2, 0.7, 3000);
 
 		// find optimal solution
 		k.solve();

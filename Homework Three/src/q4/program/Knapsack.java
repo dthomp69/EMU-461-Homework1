@@ -180,7 +180,7 @@ public class Knapsack {
 
 		// determine on which normalized accumulated fitness value it falls
 		int i;
-		for (i = 0; i < populationSize; i++)
+		for (i = 0; i < populationSize; i++) 
 			if (value <= fitnessValues[i])
 				break;
 
