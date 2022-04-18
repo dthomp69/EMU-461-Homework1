@@ -42,13 +42,13 @@ public class AntTester {
 		Ant a = new Ant(inputMatrix, inputMatrix.length);
 
 		// set parameters
-		int iterations = 10;
+		int iterations = 1000000;
 		double chemicalExponent = 1.0;
 		double distanceExponent = 1.0;
 		double initialDeposit = 0.01;
-		double depositAmount = 100;
-		double decayRate = 0.5;
-		a.setParameters(iterations, chemicalExponent, distanceExponent, initialDeposit, depositAmount, decayRate, 4329);
+		double depositAmount = 300;
+		double decayRate = 0.01;
+		a.setParameters(iterations, chemicalExponent, distanceExponent, initialDeposit, depositAmount, decayRate, 7000);
 
 		// find optimal solution
 		a.solve();
